@@ -1,0 +1,34 @@
+<% content_for :title do %>Requests<% end %>
+
+
+<hgroup>
+<h2>My Library Card</h2>
+<% if @message %>
+<div class="alert alert-success"><%=@message%></div>
+<% end %>
+</hgroup>
+
+<div class="row-fluid">
+    <div class="span12">
+        <p>Here are your requests:</p>
+        <table class="table table-striped">
+            <tr><th>#</th><th>Title</th><th>Author</th><th>Pick Up Location</th><th></th></tr>
+            <% if @requests["total_record_count"] > 0 
+            	@requests["user_request"].each_with_index do |request,i| 
+            		if request["request_type"] = "HOLD" %>
+						<tr>
+							<td><%=i%></td>
+							<td><%=request["title"]%></td>
+							<td><%=request["author"]%></td>
+							<td><%=request["pickup_location"]%></td>
+							<td><%=link_to "Cancel request", controller: "requests", action: "cancel", requestId: request["request_id"]  %></td>
+							<!--  {controller: "requests", action: "cancel"}, requestId: request["request_id"]  -->
+						</tr>
+					<% end            	
+            	 end %>
+            <% else %>
+            	<tr><td colspan="5">No requests found.</td></tr>
+            <% end %>
+        </table>
+    </div>
+</div>

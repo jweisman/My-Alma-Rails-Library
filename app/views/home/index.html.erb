@@ -1,0 +1,30 @@
+<% content_for :title do %>Home<% end %>
+
+    <!-- Main jumbotron for a primary marketing message or call to action -->
+    <div class="jumbotron" style="background-image: url('../images/background.jpg'); background-repeat: no-repeat; background-position:  top center;">
+      <div class="container">
+        <h1>Welcome to My Alma Library</h1>
+        <p>This is your library, extended. Here you can view your personal information, check out your requests, or view and pay your fines. This site was built with the Alma REST APIs. More information is available at the Ex Libris Developer Network.</p>
+        <p><a class="btn btn-primary btn-lg" href="https://developers.exlibrisgroup.com/alma/apis" role="button">Learn more &raquo;</a></p>
+      </div>
+    </div>
+
+    <div class="container">
+      <!-- Example row of columns -->
+      <div class="row">
+        <div class="col-md-4">
+          <h2>My Library Card</h2>
+          <p>All your personal library information in one place. View and update here. </p>
+          <p><%= link_to 'Library Card', {controller: 'card'}, class: 'btn btn-default'%>
+        </div>
+        <div class="col-md-4">
+          <h2>Requests</h2>
+          <p>Waiting for something at the library? See your requests here. Changed your mind? You can cancel requests as well... </p>
+          <p><%= link_to 'Requests', {controller: 'requests'}, class: 'btn btn-default'%></p>
+       </div>
+        <div class="col-md-4">
+          <h2>Fines</h2>
+          <p>Owe some money? No biggie.... see all your fines here. And when you're ready to pay up, it's simple and convenient.</p>
+          <p><%= link_to 'Fines', {controller: 'fines'}, class: 'btn btn-default'%></p>
+        </div>
+      </div>

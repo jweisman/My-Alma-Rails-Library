@@ -1,0 +1,8 @@
+	<ul class="nav navbar-nav navbar-right">
+		<% if current_user %>
+			<li><a href="#">Signed in as <strong><%= current_user.name %></strong></a></li>
+			<li><%= link_to "Logout", signout_path, id: "sign_out" %></li>
+		<% else %>
+			<li><%= link_to "Login", "/auth/google_oauth2", id: "sign_in" %></li>
+		<% end %>
+   </ul>  

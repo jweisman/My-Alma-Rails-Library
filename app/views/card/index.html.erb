@@ -1,0 +1,26 @@
+<% content_for :title do %>My Library Card<% end %>
+
+
+<hgroup>
+<h2>My Library Card</h2>
+
+<div class="alert alert-info">Welcome <%=@user["first_name"] + " " + @user["last_name"]%>!</div>
+<% if @message %>
+<div class="alert alert-success"><%=@message%></div>
+<% end %>
+</hgroup>
+<div class="row-fluid">
+    <div class="span12">
+		<%= form_tag(controller: "card", action: "update") %>
+            <table class="table">
+                <tr><th>First Name:</th><td> <%= text_field(:user, :first_name, :value => @user["first_name"]) %></td></tr>
+                <tr><th>Middle Name:</th><td> <%= text_field(:user, :middle_name, :value => @user["middle_name"]) %></td></tr>
+                <tr><th>Last Name:</th><td> <%= text_field(:user, :last_name, :value => @user["last_name"]) %></td></tr>                
+                <tr><th>Street Address:</th><td> <%= @user["contact_info"]["address"][0]["line1"] %></td></tr>
+                <tr><th>City:</th><td> <%= @user["contact_info"]["address"][0]["city"] %></td></tr>
+                <tr><th>State:</th><td> <%= @user["contact_info"]["address"][0]["state_province"] %></td></tr>
+                <tr><th>Postal Code</th><td> <%= @user["contact_info"]["address"][0]["postal_code"] %></td></tr>
+          </table>
+	<input type="submit" value="Update"/></form>
+    </div>
+</div>
