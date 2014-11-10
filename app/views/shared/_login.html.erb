@@ -1,8 +1,9 @@
-	<ul class="nav navbar-nav navbar-right">
-		<% if current_user %>
-			<li><a href="#">Signed in as <strong><%= current_user.name %></strong></a></li>
-			<li><%= link_to "Logout", signout_path, id: "sign_out" %></li>
-		<% else %>
-			<li><%= link_to "Login", "/auth/google_oauth2", id: "sign_in" %></li>
-		<% end %>
-   </ul>  
+
+<div class="nav navbar-form navbar-right">
+	<% if current_user %>
+		<span style="color:grey">Signed in as <strong><%= current_user.name %></strong></span>&nbsp; 
+		<%= link_to "Logout", signout_path, id: "sign_out", class: "btn btn-default btn-sm" %>
+	<% else %>
+		<%= link_to "Login with Google", "/auth/google_oauth2", id: "sign_in", class: "btn btn-default btn-sm" %>
+	<% end %>
+</div>

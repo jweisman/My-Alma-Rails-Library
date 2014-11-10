@@ -11,7 +11,7 @@ include ApplicationHelper
   end
   
   def update
-  	user = GetUser()
+  	user = get_user()
   	user["first_name"] = params[:user]["first_name"]
   	user["last_name"]  = params[:user]["last_name"]
  	newuser = alma_api_put("/users/" + current_user.email, user)
