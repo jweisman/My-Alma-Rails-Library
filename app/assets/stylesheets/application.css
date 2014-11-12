@@ -24,9 +24,8 @@
        url('../assets/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
 }
 
-/* Move down content because we have a fixed navbar that is 50px tall */
+/* Move down content for the navbar  */
 body {
   padding-top: 0px;
   padding-bottom: 20px;
 }
-

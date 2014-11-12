@@ -14,14 +14,14 @@ include ApplicationHelper
   	user = get_user()
   	user["first_name"] = params[:user]["first_name"]
   	user["last_name"]  = params[:user]["last_name"]
- 	newuser = alma_api_put("/users/" + current_user.email, user)
+ 	newuser = alma_api_put("/users/#{current_user.email}", user)
   	redirect_to :action => "index", :message => "Your information was updated."
   end
   
   private
   
   def get_user
-  	user = alma_api_get("/users/" + current_user.email)
+  	user = alma_api_get("/users/#{current_user.email}")
   	return JSON.parse(user)
   end
   

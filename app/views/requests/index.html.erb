@@ -2,7 +2,7 @@
 
 
 <hgroup>
-<h2>My Library Card</h2>
+<h2>Requests</h2>
 <% if @message %>
 <div class="alert alert-success"><%=@message%></div>
 <% end %>
@@ -15,9 +15,9 @@
             <tr><th>#</th><th>Title</th><th>Author</th><th>Pick Up Location</th><th></th></tr>
             <% if @requests["total_record_count"] > 0 
             	@requests["user_request"].each_with_index do |request,i| 
-            		if request["request_type"] = "HOLD" %>
+            		if request["request_type"] == "HOLD" %>
 						<tr>
-							<td><%=i%></td>
+							<td><%=i+1%></td>
 							<td><%=request["title"]%></td>
 							<td><%=request["author"]%></td>
 							<td><%=request["pickup_location"]%></td>

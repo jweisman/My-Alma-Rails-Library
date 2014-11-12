@@ -1,0 +1,17 @@
+defaults: &defaults
+  googleclientid: {GOOGLE_CLIENT_ID}
+  googleclientsecret: {GOOGLE_CLIENT_SECRET}
+  apikey: {API_KEY}
+  almaurl: https://api-na.hosted.exlibrisgroup.com/almaws/v1
+  paypalurl: https://api.sandbox.paypal.com/v1
+  paypayclientid: {PAYPAL_CLIENT_ID}
+  paypalsecret: {PAYPAL_SECRET}
+
+development:
+  <<: *defaults
+
+test:
+  <<: *defaults
+
+production:
+  <<: *defaults
