@@ -40,3 +40,6 @@ gem 'spring',        group: :development
 
 # Use Google OAuth gem for Google authentication
 gem "omniauth-google-oauth2", "~> 0.2.1"
+
+# Use puma web server (http://puma.io)
+gem "puma"
