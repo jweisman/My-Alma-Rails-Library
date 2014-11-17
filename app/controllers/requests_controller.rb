@@ -2,23 +2,22 @@ class RequestsController < ApplicationController
 include ApplicationHelper
 
   def index
-  	if current_user.blank?
-  		return redirect_to root_path
-  	end
+  	redirect_to root_path and return if current_user.blank?
+
   	@requests = get_requests()
   	@message = params[:message]
   	render
   end
   
   def cancel
-  	alma_api_delete("/users/" + current_user.email + "/requests/" + params["requestId"])
+  	alma_api_delete("/users/#{current_user.uid}/requests/#{params["requestId"]}")
   	redirect_to :action => "index", :message => "Your request was successfully cancelled."
   end
   
   private
   
   def get_requests
-  	user = alma_api_get("/users/" + current_user.email + "/requests")
+  	user = alma_api_get("/users/#{current_user.uid}/requests")
   	return JSON.parse(user)
   end
 
