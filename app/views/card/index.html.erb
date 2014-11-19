@@ -1,16 +1,12 @@
 <% content_for :title do %>My Library Card<% end %>
 
-
-<hgroup>
-<h2>Library Card</h2>
-
-<div class="alert alert-info">Welcome <%=@user["first_name"] + " " + @user["last_name"]%>!</div>
 <% if @message %>
 <div class="alert alert-success"><%=@message%></div>
 <% end %>
-</hgroup>
+
 <div class="row-fluid">
     <div class="span12">
+    	<p>Here's your personal library card information:</p>
 		<%= form_tag(controller: "card", action: "update") %>
             <table class="table">
                 <tr><th>First Name:</th><td> <%= text_field(:user, :first_name, :value => @user["first_name"]) %></td></tr>
