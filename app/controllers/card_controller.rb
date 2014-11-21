@@ -22,7 +22,7 @@ include ApplicationHelper
   
   def get_user
   	user = alma_api_get("/users/#{current_user.uid}")
-  	return JSON.parse(user)
+  	return user
   end
   
 end

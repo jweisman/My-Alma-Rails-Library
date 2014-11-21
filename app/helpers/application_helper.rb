@@ -11,7 +11,7 @@ module ApplicationHelper
 			"Authorization" => "apikey " + ENV['apikey']})
 
 		response = http.request(request)
-		return response.body	
+		return JSON.parse(response.body)
 	end
 	
 	def alma_api_put(uri, data)
@@ -27,7 +27,7 @@ module ApplicationHelper
 		request.body = data.to_json
 
 		response = http.request(request)
-		return response.body		
+		return JSON.parse(response.body)		
 	end
 	
 	def alma_api_delete(uri)

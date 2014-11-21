@@ -1,4 +1,5 @@
-<h2>There has been an error processing your request</h2>
-<div style="color:grey">
-<%=@message%>
+<% content_for :title do %>Yeah... that didn't work.<% end %>
+
+<div class="alert alert-danger" role="alert">
+	<%=@message%>
 </div>

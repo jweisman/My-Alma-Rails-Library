@@ -17,8 +17,8 @@ include ApplicationHelper
   private
   
   def get_requests
-  	user = alma_api_get("/users/#{current_user.uid}/requests")
-  	return JSON.parse(user)
+  	requests = alma_api_get("/users/#{current_user.uid}/requests")
+  	return requests
   end
 
 end

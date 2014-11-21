@@ -43,3 +43,6 @@ gem "omniauth-google-oauth2", "~> 0.2.1"
 
 # Use puma web server (http://puma.io)
 gem "puma"
+
+# Use xml simple for XML parsing
+gem 'xml-simple', '~> 1.1.4'
