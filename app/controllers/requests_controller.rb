@@ -1,9 +1,7 @@
 class RequestsController < ApplicationController
-include ApplicationHelper
+	before_filter :require_valid_user
 
   def index
-  	redirect_to root_path and return if current_user.blank?
-
   	@requests = get_requests()
   	@message = params[:message]
   	render

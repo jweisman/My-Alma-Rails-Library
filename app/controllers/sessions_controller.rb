@@ -1,11 +1,10 @@
 class SessionsController < ApplicationController
-include ApplicationHelper
 
   def create
     user = User.from_omniauth(env["omniauth.auth"])
     
     # Confirm user exists in Alma
-    if valid_alma_user?(user.id)
+    if valid_alma_user?(user.uid)
 		@message = "Your user doesn't exist in Alma."
 		render :error
     else

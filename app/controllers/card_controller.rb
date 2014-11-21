@@ -1,9 +1,7 @@
 class CardController < ApplicationController
-include ApplicationHelper
+	before_filter :require_valid_user
 
   def index
-  	redirect_to root_path and return if current_user.blank?
-
 	@user = get_user()
   	@message = params[:message]
   	render
