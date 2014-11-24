@@ -1,7 +1,7 @@
 <% content_for :title do %>My Library Card<% end %>
 
-<% if @message %>
-<div class="alert alert-success"><%=@message%></div>
+<% if flash[:notice] %>
+<div class="alert alert-success"><%=flash[:notice]%></div>
 <% end %>
 
 <div class="row-fluid">

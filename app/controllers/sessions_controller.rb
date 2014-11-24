@@ -5,7 +5,7 @@ class SessionsController < ApplicationController
     
     # Confirm user exists in Alma
     if valid_alma_user?(user.uid)
-		@message = "Your user doesn't exist in Alma."
+		flash[:alert] = "Your user doesn't exist in Alma."
 		render :error
     else
 	    session[:user_id] = user.id

@@ -15,16 +15,16 @@
         <div class="col-md-4">
           <h2>Library Card</h2>
           <p>All your personal library information in one place. View and update here. </p>
-          <p><%= link_to 'Library Card', {controller: 'card'}, class: 'btn btn-default'%>
+          <p><%= link_to 'Library Card', card_path, class: 'btn btn-default'%>
         </div>
         <div class="col-md-4">
           <h2>Requests</h2>
           <p>Waiting for something at the library? See your requests here. Changed your mind? You can cancel requests as well... </p>
-          <p><%= link_to 'Requests', {controller: 'requests'}, class: 'btn btn-default'%></p>
+          <p><%= link_to 'Requests', requests_path, class: 'btn btn-default'%></p>
        </div>
         <div class="col-md-4">
           <h2>Fines</h2>
           <p>Owe some money? No biggie.... see all your fines here. And when you're ready to pay up, it's simple and convenient.</p>
-          <p><%= link_to 'Fines', {controller: 'fines'}, class: 'btn btn-default'%></p>
+          <p><%= link_to 'Fines', fines_path, class: 'btn btn-default'%></p>
         </div>
       </div>

@@ -1,7 +1,7 @@
 <% content_for :title do %>Requests<% end %>
 
-<% if @message %>
-<div class="alert alert-success"><%=@message%></div>
+<% if flash[:notice] %>
+<div class="alert alert-success"><%=flash[:notice]%></div>
 <% end %>
 
 <div class="row-fluid">
@@ -17,8 +17,7 @@
 							<td><%=request["title"]%></td>
 							<td><%=request["author"]%></td>
 							<td><%=request["pickup_location"]%></td>
-							<td><%=link_to "Cancel request", controller: "requests", action: "cancel", requestId: request["request_id"]  %></td>
-							<!--  {controller: "requests", action: "cancel"}, requestId: request["request_id"]  -->
+							<td><%=link_to "Cancel Request", cancel_request_path(request["request_id"]) %></td>
 						</tr>
 					<% end            	
             	 end %>
