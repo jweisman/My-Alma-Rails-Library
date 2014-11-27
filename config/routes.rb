@@ -11,6 +11,8 @@ Rails.application.routes.draw do
   get 'card/index', as: 'card'
   post 'card/update'
 
+  resources :files
+
   get 'home/index'
 
 
