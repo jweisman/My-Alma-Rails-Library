@@ -11,7 +11,29 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141029010830) do
+ActiveRecord::Schema.define(version: 20141201122932) do
+
+  create_table "deposits", force: true do |t|
+    t.text     "metadata"
+    t.string   "folder_name"
+    t.string   "bucket"
+    t.string   "status"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "source_files", force: true do |t|
+    t.string   "file_name"
+    t.string   "file_content_type"
+    t.integer  "file_size"
+    t.string   "url"
+    t.string   "key"
+    t.string   "bucket"
+    t.integer  "deposit_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "users", force: true do |t|
     t.string   "provider"

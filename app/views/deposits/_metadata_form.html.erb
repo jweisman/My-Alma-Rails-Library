@@ -1,0 +1,9 @@
+		<%= form_for @deposit do |f| %>
+            <table class="table">
+                <tr><th>Title:</th><td> <%= text_field_tag "metadata[dc:title]", @deposit.metadata["dc:title"] || ""%></td></tr>
+                <tr><th>Creator:</th><td> <%= text_field_tag "metadata[dc:creator]", current_user["name"] %></td></tr>
+                <tr><th>Description:</th><td> <%= text_area_tag "metadata[dc:description]", @deposit.metadata["dc:description"] || ""%></td></tr>
+          </table>
+    <a href=<%= deposits_path%> class="btn btn-default">Cancel</a>    
+	<input class="btn btn-primary" type="submit" value="Next >>"/>
+    <% end %>

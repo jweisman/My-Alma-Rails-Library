@@ -1,0 +1,12 @@
+<% content_for :title do %>New Deposit >> Metadata<% end %>
+
+<% if flash[:notice] %>
+<div class="alert alert-success"><%=flash[:notice]%></div>
+<% end %>
+
+<div class="row-fluid">
+    <div class="span12">
+    	<p>Enter some metadata about your deposit:</p>
+            <%= render "metadata_form" %>
+    </div>
+ </div>

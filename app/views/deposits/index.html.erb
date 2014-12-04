@@ -1,0 +1,49 @@
+<% content_for :title do %>Digital Repository<% end %>
+
+<% if flash[:notice] %>
+<div class="alert alert-success"><%=flash[:notice]%></div>
+<% end %>
+
+<div class="row-fluid">
+    <div class="span12">
+        <p>Here are your deposits in our repository:</p>
+        <table class="table table-striped">
+            <tr><th>#</th><th>Title</th><th>Created Date</th><th>Status</th><th>Deposit Folder</th>
+                <th># of Files</th><th>Size of Files</th><th></th></tr>
+            <% @deposits.each_with_index do |deposit,i| %>
+                <tr id="deposit_<%=deposit.id%>">
+                    <td><%=i+1%></td>
+                    <td><%= deposit.metadata["dc:title"] || "N/A"%></td>
+                    <td><%= deposit.created_at.localtime.strftime("%d-%b-%Y %H:%M")%></td>
+                    <td><%= deposit.status%></td>
+                    <td><%= deposit.folder_name %></td>
+                    <td><%= deposit.source_files.count%></td>
+                    <td><%= formatFileSize(deposit.source_files.sum(:file_size))%></td>
+                    <td>
+                        <button class="btn btn-default delete" data-type="DELETE" data-url="<%=deposit_path(deposit)%>" data-object_id="<%=deposit.id%>" data-confirmation="Are you sure?" onclick="delete_file(<%=deposit.id%>)">
+                        <i class="glyphicon glyphicon-trash"></i>
+                        </button>
+                        <a class="btn btn-default" href="<%=edit_deposit_path deposit%>">
+                        <i class="glyphicon glyphicon-pencil"></i>
+                        </a>
+                    </td>
+
+                </tr>
+            <% end %>
+        </table>
+    <%= link_to 'Add a new deposit', new_deposit_path, class: 'btn btn-primary'%>
+    </div>
+</div>
+
+<script>
+function delete_file(id)
+{
+    $.ajax({
+        url: "<%=deposits_path%>/" + id,
+        type: 'DELETE',
+        success: function(result) {
+             $('#deposit_' + id).hide();
+        }
+    });
+}
+</script>

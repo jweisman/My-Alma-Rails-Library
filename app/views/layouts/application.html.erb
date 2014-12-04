@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><%= content_for?(:title) ? yield(:title) : ""%> - My Alma Library</title>
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
     <%= csrf_meta_tags %>
     <link href="<%= image_path("favicon.ico") %>" rel="Shortcut Icon">
 </head>
@@ -34,7 +35,7 @@
 						<li><%= link_to 'Requests', requests_path%></li>
 					</ul>
             	</li>
-				<li><%= link_to 'Digital Repository', files_path%></li>
+				<li><%= link_to 'Digital Repository', deposits_path%></li>
 				<li><%= link_to 'Fines', fines_path%></li>
             </ul>
 			<%= render "shared/login" %>            
@@ -57,6 +58,5 @@
             <small>Home page image &copy; University of St. Thomas</small>
         </footer>
     </div> <!-- container -->
-    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
 </body>
 </html>

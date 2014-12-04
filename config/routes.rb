@@ -1,4 +1,13 @@
 Rails.application.routes.draw do
+
+  resources :deposits do
+    get :confirm, to: 'deposits#confirm', as: 'confirm'
+    get :submit, to: 'deposits#submit', as: 'submit'
+    resources :source_files, :only => [:index, :create, :destroy], :controller => 's3_uploads' do
+      get :generate_key, :on => :collection
+    end
+  end
+  
   get 'sessions/create'
 
   get 'sessions/destroy'
@@ -10,8 +19,6 @@ Rails.application.routes.draw do
 
   get 'card/index', as: 'card'
   post 'card/update'
-
-  resources :files
 
   get 'home/index'
 
