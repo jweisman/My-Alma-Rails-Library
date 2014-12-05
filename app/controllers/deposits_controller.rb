@@ -33,7 +33,7 @@ class DepositsController < ApplicationController
   							folder_name: SecureRandom.uuid.gsub(/-/,''),
   							bucket: ENV['amazonbucket']}
   	@deposit.save
-  	write_file "#{folder_name}/.lock", "test"
+  	write_file "#{folder_name}/.lock", nil
   	redirect_to deposit_source_files_path(@deposit)
   end
 
