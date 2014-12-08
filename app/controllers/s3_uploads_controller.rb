@@ -16,8 +16,7 @@ class S3UploadsController < ApplicationController
   # POST /source_files
   # POST /source_files.json
   def create
-    # this line allows for compatibility with `ProtectedAttributes` or `StrongParameters`
-    parameters = S3CorsFileupload.active_record_protected_attributes? ? params[:source_file] : params.require(:source_file).permit(:url, :bucket, :key)
+    parameters = params.require(:source_file).permit(:url, :bucket, :key)
     @source_file = SourceFile.new(parameters)
     @source_file.attributes = { deposit: @deposit }
     respond_to do |format|
@@ -53,7 +52,7 @@ class S3UploadsController < ApplicationController
     #uid = SecureRandom.uuid.gsub(/-/,'')
 
     render json: {
-      key: "01TEST/upload/#{@deposit.folder_name}/#{params[:filename]}",
+      key: ENV['institution'] + "/upload/#{@deposit.folder_name}/#{params[:filename]}",
       success_action_redirect: "/"
     }
   end

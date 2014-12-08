@@ -20,14 +20,24 @@
                     <td><%= deposit.source_files.count%></td>
                     <td><%= formatFileSize(deposit.source_files.sum(:file_size))%></td>
                     <td>
+                        <%= button_tag '', data: {
+                            type: 'DELETE',
+                            url: deposit_path(deposit),
+                            object_id: deposit.id
+                        }, class: 'btn btn-default delete' do%>
+                        <i class="glyphicon glyphicon-trash"></i>
+                        <% end %>
+                        <!--
                         <button class="btn btn-default delete" data-type="DELETE" data-url="<%=deposit_path(deposit)%>" data-object_id="<%=deposit.id%>" data-confirmation="Are you sure?" onclick="delete_file(<%=deposit.id%>)">
                         <i class="glyphicon glyphicon-trash"></i>
                         </button>
+                        -->
+                        <% if deposit.status != "SUBMITTED" %>
                         <a class="btn btn-default" href="<%=edit_deposit_path deposit%>">
                         <i class="glyphicon glyphicon-pencil"></i>
+                        <% end %>
                         </a>
                     </td>
-
                 </tr>
             <% end %>
         </table>
@@ -36,14 +46,15 @@
 </div>
 
 <script>
-function delete_file(id)
-{
+// Delete deposit and hide row
+$(".delete").click(function() {
+    row = $('#deposit_' + $(this).data('object-id'));
     $.ajax({
-        url: "<%=deposits_path%>/" + id,
-        type: 'DELETE',
-        success: function(result) {
-             $('#deposit_' + id).hide();
+        url: $(this).data('url'),
+        type: $(this).data('type'),
+        success: function(result) { 
+           row.hide();
         }
     });
-}
+});
 </script>

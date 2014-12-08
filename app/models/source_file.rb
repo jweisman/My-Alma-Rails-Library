@@ -1,10 +1,9 @@
-#require 'aws/s3'
 require 'aws-sdk-core'
 
 class SourceFile < ActiveRecord::Base
   belongs_to :deposit
   # This line can be removed for Rails 4 apps that are using Strong Parameters
-  attr_accessible :url, :bucket, :key if S3CorsFileupload.active_record_protected_attributes?
+  # attr_accessible :url, :bucket, :key if S3CorsFileupload.active_record_protected_attributes?
 
   validates_presence_of :file_name, :file_content_type, :file_size, :key, :bucket, :deposit
 
@@ -19,7 +18,12 @@ class SourceFile < ActiveRecord::Base
   # make all attributes readonly after creating the record (not sure we need this?)
   after_create { readonly! }
   # cleanup; destroy corresponding file on S3
-  after_destroy { s3_object.try(:delete) }
+  after_destroy { 
+    @s3.delete_object(
+      key: key,
+      bucket: bucket
+    ) if open_aws
+  }
 
   # handle objects with private scope
   after_find :get_url
@@ -41,7 +45,8 @@ class SourceFile < ActiveRecord::Base
   end
 
   #---- start S3 related methods -----
-  # changed to aws-sdk since the aws-s3 find method wasn't working with a limited permissions user
+  # changed to aws-sdk since the aws-s3 find method wasn't working 
+  # with a limited permissions user
   # (it needed additional list bucket permissions)
   def s3_object
     @s3_object ||= @s3.head_object(bucket: bucket, key: key) if open_aws && key
@@ -57,8 +62,8 @@ class SourceFile < ActiveRecord::Base
 
   def open_aws
     Aws.config[:ssl_verify_peer] = false
-    creds = Aws::Credentials.new(S3CorsFileupload::Config.access_key_id,
-      S3CorsFileupload::Config.secret_access_key)
+    creds = Aws::Credentials.new(ENV['amazonaccesskey'],
+      ENV['amazonsecretkey'])
     @s3 ||= Aws::S3::Client.new(credentials: creds, region: 'us-east-1')
   end
   #---- end S3 related methods -----

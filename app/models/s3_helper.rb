@@ -1,7 +1,5 @@
-module S3helper
+module S3Helper
 require 'aws-sdk-core'
-
-	# Amazon methods
 
 	def write_file(key, content)
 		@s3.put_object(

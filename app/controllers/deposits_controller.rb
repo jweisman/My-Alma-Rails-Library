@@ -2,7 +2,7 @@ class DepositsController < ApplicationController
 	before_action :require_valid_user
 	before_action :get_deposit, except: [:index, :create, :new]
 
-  include S3helper
+  include S3Helper
 
   def index
   	@deposits = Deposit.where("user_id=? and status != 'DELETED'", current_user)
@@ -77,6 +77,6 @@ class DepositsController < ApplicationController
   end
 
   def folder_name
-  	return "01TEST/upload/#{@deposit.folder_name}"
+    return ENV['institution'] + "/upload/#{@deposit.folder_name}"
   end
 end
