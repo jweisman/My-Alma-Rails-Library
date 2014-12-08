@@ -17,11 +17,11 @@
 
 @font-face {
   font-family: 'Glyphicons Halflings';
-  src: url('../assets/glyphicons-halflings-regular.eot');
-  src: url('../assets/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), 
-       url('../assets/glyphicons-halflings-regular.woff') format('woff'), 
-       url('../assets/glyphicons-halflings-regular.ttf') format('truetype'), 
-       url('../assets/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
+  src: asset_url('glyphicons-halflings-regular.eot');
+  src: asset_url('glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), 
+       asset_url('glyphicons-halflings-regular.woff') format('woff'), 
+       asset_url('glyphicons-halflings-regular.ttf') format('truetype'), 
+       asset_url('glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
 }
 
 /* Move down content for the navbar  */

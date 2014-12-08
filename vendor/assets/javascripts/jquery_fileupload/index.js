@@ -1,0 +1,10 @@
+//= require jquery_fileupload/jquery.ui.widget
+//= require jquery_fileupload/tmpl
+//= require jquery_fileupload/load-image
+//= require jquery_fileupload/load-image-meta
+//= require jquery_fileupload/jquery.iframe-transport
+//= require jquery_fileupload/jquery.fileupload
+//= require jquery_fileupload/jquery.fileupload-process
+//= require jquery_fileupload/jquery.fileupload-image
+//= require jquery_fileupload/jquery.fileupload-validate
+//= require jquery_fileupload/jquery.fileupload-ui
