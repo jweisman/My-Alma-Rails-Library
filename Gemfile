@@ -50,6 +50,5 @@ gem 'xml-simple', '~> 1.1.4'
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin]
 
-# From: https://github.com/batter/s3_cors_fileupload
-gem 's3_cors_fileupload'
+# Amazon SDK
 gem 'aws-sdk-core'
