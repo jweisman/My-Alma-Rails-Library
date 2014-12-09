@@ -17,8 +17,8 @@
                     <td><%= deposit.created_at.localtime.strftime("%d-%b-%Y %H:%M")%></td>
                     <td><%= deposit.status%></td>
                     <td><%= deposit.folder_name %></td>
-                    <td><%= deposit.source_files.count%></td>
-                    <td><%= formatFileSize(deposit.source_files.sum(:file_size))%></td>
+                    <td><%= deposit.filestreams.count%></td>
+                    <td><%= formatFileSize(deposit.filestreams.sum(:file_size))%></td>
                     <td>
                         <%= button_tag '', data: {
                             type: 'DELETE',

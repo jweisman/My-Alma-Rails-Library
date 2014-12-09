@@ -1,6 +1,6 @@
-class CreateSourceFiles < ActiveRecord::Migration
+class CreateFilestreams < ActiveRecord::Migration
   def change
-    create_table :source_files do |t|
+    create_table :filestreams do |t|
       t.string :file_name
       t.string :file_content_type
       t.integer :file_size

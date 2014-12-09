@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   resources :deposits do
     get :confirm, to: 'deposits#confirm', as: 'confirm'
     get :submit, to: 'deposits#submit', as: 'submit'
-    resources :source_files, :only => [:index, :create, :destroy], :controller => 's3_uploads' do
+    resources :filestreams, :only => [:index, :create, :destroy] do
       get :generate_key, :on => :collection
     end
   end

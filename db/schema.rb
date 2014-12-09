@@ -23,7 +23,7 @@ ActiveRecord::Schema.define(version: 20141201122932) do
     t.datetime "updated_at"
   end
 
-  create_table "source_files", force: true do |t|
+  create_table "filestreams", force: true do |t|
     t.string   "file_name"
     t.string   "file_content_type"
     t.integer  "file_size"

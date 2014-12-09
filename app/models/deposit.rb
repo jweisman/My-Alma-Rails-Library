@@ -1,6 +1,6 @@
 class Deposit < ActiveRecord::Base
 	belongs_to :user
-	has_many :source_files
+	has_many :filestreams
 	serialize :metadata, JSON
 	after_initialize :init
 

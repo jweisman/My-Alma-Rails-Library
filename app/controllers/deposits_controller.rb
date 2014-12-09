@@ -6,8 +6,6 @@ class DepositsController < ApplicationController
 
   def index
   	@deposits = Deposit.where("user_id=? and status != 'DELETED'", current_user)
-  	#@deposits = Deposit.where("id < 6").destroy_all
-  	#render plain: "done"
   end
 
   def new
@@ -21,7 +19,7 @@ class DepositsController < ApplicationController
   def update
   	@deposit.metadata = params["metadata"]
   	@deposit.save
-  	redirect_to deposit_source_files_path(@deposit)
+  	redirect_to deposit_filestreams_path(@deposit)
   end
 
   def create
@@ -34,7 +32,7 @@ class DepositsController < ApplicationController
   							bucket: ENV['amazonbucket']}
   	@deposit.save
   	write_file "#{folder_name}/.lock", nil
-  	redirect_to deposit_source_files_path(@deposit)
+  	redirect_to deposit_filestreams_path(@deposit)
   end
 
   def destroy

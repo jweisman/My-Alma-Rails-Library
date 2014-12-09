@@ -28,10 +28,6 @@ GEM
       thread_safe (~> 0.1)
       tzinfo (~> 1.1)
     arel (5.0.1.20140414130214)
-    aws-s3 (0.6.3)
-      builder
-      mime-types
-      xml-simple
     aws-sdk-core (2.0.11)
       builder (~> 3.0)
       jmespath (~> 1.0)
@@ -156,7 +152,6 @@ DEPENDENCIES
   omniauth-google-oauth2 (~> 0.2.1)
   puma
   rails (= 4.1.6)
-  s3_cors_fileupload
   sass-rails (~> 4.0.3)
   sdoc (~> 0.4.0)
   spring

@@ -26,7 +26,7 @@
       });
       
       // Load existing files:
-      $.getJSON('<%=deposit_source_files_path%>', function (files) {
+      $.getJSON('<%=deposit_filestreams_path%>', function (files) {
         $.each(files, function(index, value) { 
           $('#upload_files tbody').append(tmpl('template-uploaded', value));
         });

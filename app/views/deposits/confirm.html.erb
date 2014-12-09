@@ -20,7 +20,7 @@
         <h3>Files:</h3>
         <table class="table table-striped">
             <tr><th>#</th><th>File name</th><th>File Type</th><th>File Size</th></tr>
-            <% @deposit.source_files.each_with_index do |file,i|  %>
+            <% @deposit.filestreams.each_with_index do |file,i|  %>
 				<tr>
 					<td><%=i+1%></td>
 					<td><%=file["file_name"]%></td>

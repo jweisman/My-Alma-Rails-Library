@@ -1,6 +1,9 @@
+# Code based on s3_cors_fileupload
+# https://github.com/batter/s3_cors_fileupload
+
 require 'aws-sdk-core'
 
-class SourceFile < ActiveRecord::Base
+class Filestream < ActiveRecord::Base
   belongs_to :deposit
   # This line can be removed for Rails 4 apps that are using Strong Parameters
   # attr_accessible :url, :bucket, :key if S3CorsFileupload.active_record_protected_attributes?
@@ -35,7 +38,7 @@ class SourceFile < ActiveRecord::Base
       'size' => file_size,
       'url' => url,
       'image' => self.is_image?,
-      'delete_url' => Rails.application.routes.url_helpers.deposit_source_file_path(deposit_id,
+      'delete_url' => Rails.application.routes.url_helpers.deposit_filestream_path(deposit_id,
         self, :format => :json)
     }
   end
