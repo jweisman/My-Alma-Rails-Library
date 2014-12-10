@@ -5,7 +5,7 @@
 <div class="row-fluid">
     <div class="span12">
     	<p>Here's your personal library card information:</p>
-		<%= form_tag(controller: "card", action: "update") %>
+		<%= form_tag card_path, method: :put do %>
             <table class="table">
                 <tr><th>First Name:</th><td> <%= text_field(:user, :first_name, :value => @user["first_name"]) %></td></tr>
                 <tr><th>Middle Name:</th><td> <%= text_field(:user, :middle_name, :value => @user["middle_name"]) %></td></tr>
@@ -15,6 +15,7 @@
                 <tr><th>State:</th><td> <%= @user["contact_info"]["address"][0]["state_province"] %></td></tr>
                 <tr><th>Postal Code</th><td> <%= @user["contact_info"]["address"][0]["postal_code"] %></td></tr>
           </table>
-	<input class="btn btn-default" type="submit" value="Update"/></form>
+	      <input class="btn btn-default" type="submit" value="Update"/>
+        <% end %>
     </div>
 </div>

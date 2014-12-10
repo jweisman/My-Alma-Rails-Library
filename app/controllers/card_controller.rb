@@ -1,10 +1,6 @@
 class CardController < ApplicationController
 	before_action :require_valid_user
 	before_action :get_user
-
-  def index
-
-  end
   
   def update
   	@user["first_name"] = params[:user]["first_name"]
