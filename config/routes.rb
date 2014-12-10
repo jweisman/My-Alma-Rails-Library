@@ -1,4 +1,16 @@
 Rails.application.routes.draw do
+  
+  root 'home#index'
+
+  resource :home, only: [:index]
+
+  resources :fines, only: [:index] 
+
+  resources :requests, only: [:index] do
+    get 'cancel', on: :member
+  end
+
+  resource :card, only: [:show, :update], to: 'card'
 
   resources :deposits do
     get :confirm, to: 'deposits#confirm', as: 'confirm'
@@ -7,27 +19,6 @@ Rails.application.routes.draw do
       get :generate_key, :on => :collection
     end
   end
-  
-  get 'sessions/create'
-
-  get 'sessions/destroy'
-
-  get 'fines/index', as: 'fines'
-
-  get 'requests/index', as: 'requests'
-  get 'requests/:requestId/cancel', to: 'requests#cancel', as: 'cancel_request'
-
-  get 'card/index', as: 'card'
-  post 'card/update'
-
-  get 'home/index'
-
-
-  # The priority is based upon order of creation: first created -> highest priority.
-  # See how all your routes lay out with "rake routes".
-
-  # You can have the root of your site routed with "root"
-  root 'home#index'
 
   # Authentication routes
   get 'auth/:provider/callback', to: 'sessions#create'
@@ -35,10 +26,9 @@ Rails.application.routes.draw do
   get 'signout', to: 'sessions#destroy', as: 'signout'
 
   resources :sessions, only: [:create, :destroy]
-  resource :home, only: [:index]
 
-
-
+  # The priority is based upon order of creation: first created -> highest priority.
+  # See how all your routes lay out with "rake routes".
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
