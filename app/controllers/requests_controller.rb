@@ -7,7 +7,7 @@ class RequestsController < ApplicationController
   end
   
   def cancel
-  	alma_api_delete("/users/#{current_user.uid}/requests/#{params["requestId"]}")
+  	alma_api_delete("/users/#{current_user.uid}/requests/#{params['id']}")
   	redirect_to requests_path, notice: "Your request was successfully cancelled."
   end
   
