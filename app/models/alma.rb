@@ -1,62 +1,40 @@
 module Alma
-	require 'net/http'
+	require 'rest-client'
 	require 'json'
 	
 # Alma API methods
 
 	def alma_api_get(uri)
-		uri = URI.parse(ENV['almaurl'] + uri)
-		http = Net::HTTP.new(uri.host, uri.port)
-		http.use_ssl = true
-		request = Net::HTTP::Get.new(uri.request_uri)
-		request.initialize_http_header({"Accept" => "application/json", 
-			"Authorization" => "apikey " + ENV['apikey']})
-
-		response = http.request(request)
+		response =
+		 RestClient.get ENV['almaurl'] + uri,
+				accept: :json, 
+				authorization: 'apikey ' + ENV['apikey']
 		return JSON.parse(response.body)
 	end
 	
 	def alma_api_put(uri, data)
-		uri = URI.parse(ENV['almaurl'] + uri)
-		http = Net::HTTP.new(uri.host, uri.port)
-		http.use_ssl = true
-		request = Net::HTTP::Put.new(uri.request_uri)
-		request.initialize_http_header({"Content-Type" => "application/json", 
-			"Authorization" => "apikey " + ENV['apikey'],
-			"Content-Length" => data.length.to_s,
-			"Accept" => "application/json"})
-			
-		request.body = data.to_json
-
-		response = http.request(request)
+		response =
+		 RestClient.put ENV['almaurl'] + uri,
+		 	data.to_json,
+			accept: :json, 
+			authorization: 'apikey ' + ENV['apikey'],
+			content_type: :json
 		return JSON.parse(response.body)		
 	end
 	
 	def alma_api_post(uri, data)
-		uri = URI.parse(ENV['almaurl'] + uri)
-		http = Net::HTTP.new(uri.host, uri.port)
-		http.use_ssl = true
-		request = Net::HTTP::Post.new(uri.request_uri)
-		request.initialize_http_header({"Content-Type" => "application/json", 
-			"Authorization" => "apikey " + ENV['apikey'],
-			"Content-Length" => data.length.to_s,
-			"Accept" => "application/json"})
-			
-		request.body = data.to_json
-
-		response = http.request(request)
-		return JSON.parse(response.body)			
+		response =
+		 RestClient.post ENV['almaurl'] + uri,
+		 	data.to_json,
+			accept: :json, 
+			authorization: 'apikey ' + ENV['apikey'],
+			content_type: :json
+		return JSON.parse(response.body)	
 	end	
 	
 	def alma_api_delete(uri)
-		uri = URI.parse(ENV['almaurl'] + uri)
-		http = Net::HTTP.new(uri.host, uri.port)
-		http.use_ssl = true
-		request = Net::HTTP::Delete.new(uri.request_uri)
-		request.initialize_http_header({"Authorization" => "apikey " + ENV['apikey']})
-
-		response = http.request(request)
+		RestClient.delete ENV['almaurl'] + uri,
+			authorization: 'apikey ' + ENV['apikey']
 	end	
   	
-	
 end

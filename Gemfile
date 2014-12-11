@@ -42,7 +42,13 @@ gem 'spring',        group: :development
 gem "omniauth-google-oauth2", "~> 0.2.1"
 
 # Use puma web server (http://puma.io)
-gem "puma"
+gem "puma", platforms: ["ruby"]
 
 # Use xml simple for XML parsing
 gem 'xml-simple', '~> 1.1.4'
+
+# Windows does not include zoneinfo files, so bundle the tzinfo-data gem
+gem 'tzinfo-data', platforms: [:mingw, :mswin]
+
+# Use REST Client- handles HTTP errors and redirects natively
+gem 'rest_client'
