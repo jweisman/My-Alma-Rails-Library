@@ -15,7 +15,11 @@
 							<td><%=request["title"]%></td>
 							<td><%=request["author"]%></td>
 							<td><%=request["pickup_location"]%></td>
-							<td><%=link_to "Cancel Request", cancel_request_path(request["request_id"]) %></td>
+                            <td>
+                                <%= link_to(cancel_request_path(request["request_id"]), class: "btn btn-default") do %>
+                                    <i class="glyphicon glyphicon-trash"></i>
+                                <% end %>
+                            </td>
 						</tr>
 					<% end            	
             	 end %>

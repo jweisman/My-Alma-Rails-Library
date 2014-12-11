@@ -10,7 +10,7 @@ Rails.application.routes.draw do
     get 'cancel', on: :member
   end
 
-  resource :card, only: [:show, :update], to: 'card'
+  resource :card, only: [:show, :update], controller: 'card'
 
   # Authentication routes
   get 'auth/:provider/callback', to: 'sessions#create'
