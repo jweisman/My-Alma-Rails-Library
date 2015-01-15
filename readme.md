@@ -10,6 +10,7 @@ The original application does the following:
 * Authentication with Google OAuth
 * Library card- displays some basic student information and allow users to update a few key data elements
 * Requests- shows a list of the student's requests, and allow the user to cancel them
+* Fines & Fees- displays a students's fines, and integrates with PayPal to process fine payment
 
 More information about the original C# app is available in this [blog entry](https://developers.exlibrisgroup.com/blog/Creating-a-Student-Portal-with-the-New-Alma-APIs).
 

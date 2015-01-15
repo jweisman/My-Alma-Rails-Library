@@ -6,6 +6,7 @@ defaults: &defaults
   paypalurl: https://api.sandbox.paypal.com/v1
   paypayclientid: {PAYPAL_CLIENT_ID}
   paypalsecret: {PAYPAL_SECRET}
+  pdsurl: {PDS URL}
   amazonaccesskey: {AMAZON_ACCESS_KEY}
   amazonsecretkey: {AMAZON_SECRET_KEY}
   amazonbucket: {AMAZON_BUCKET}

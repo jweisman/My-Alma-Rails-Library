@@ -13,4 +13,16 @@ class User < ActiveRecord::Base
       user.save!
     end
   end
+  
+  # Add support for user from PDS
+  def self.from_pds(bor_info)
+    where(provider: "PDS-" + bor_info["bor_id"][0]["institute"][0], 
+    	uid: bor_info["bor_id"][0]["id"]).first_or_initialize.tap do |user|
+      user.provider = "PDS-" + bor_info["bor_id"][0]["institute"][0]
+      user.uid = bor_info["bor_id"][0]["id"][0]
+      user.name = bor_info["bor-info"][0]["name"][0]
+      user.email = bor_info["bor-info"][0]["email_address"][0]
+      user.save!
+    end
+  end
 end
