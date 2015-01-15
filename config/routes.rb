@@ -4,7 +4,13 @@ Rails.application.routes.draw do
 
   resource :home, only: [:index]
 
-  resources :fines, only: [:index] 
+  resources :fines, only: [:index] do
+    collection do
+      get 'pay'
+      get 'confirm'
+      get 'validate'
+    end
+  end
 
   resources :requests, only: [:index] do
     get 'cancel', on: :member
