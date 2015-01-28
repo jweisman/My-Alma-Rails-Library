@@ -22,7 +22,7 @@ class FinesController < ApplicationController
         } ['href'] 
         redirect_to approval_url
   	else
-  		flash[:alert] = "There was an error processing your payment."
+  		flash.now[:alert] = "There was an error processing your payment."
   		render :error and return
   	end
   end
@@ -48,8 +48,8 @@ class FinesController < ApplicationController
   			notice: "Your payment has been successfully processed and #{amount} 
   				has been credited to your account. Thanks!"
   	else
-		flash[:alert] = "There was an error processing your payment."
-		render :error and return
+		  flash.now[:alert] = "There was an error processing your payment."
+		  render :error and return
   	end  	
 
   end
@@ -62,7 +62,7 @@ class FinesController < ApplicationController
 
   	bor_info = get_pds_bor_info(params["pds_handle"])
     if bor_info["error"]
-      flash[:alert] = "There was a problem logging you in."
+      flash.now[:alert] = "There was a problem logging you in."
       render :error and return
     end
 
