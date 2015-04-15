@@ -25,7 +25,7 @@ end
 #  	begin
 #		newuser = AlmaApiPut("/users/#{current_user.uid}, @user)
 #	rescue Exception => e
-#		flash["notice"] = "There was an error updating your library card (" +
+#		flash.now["notice"] = "There was an error updating your library card (" +
 #			e.message + ")"
 #		render :error and return
 #	end

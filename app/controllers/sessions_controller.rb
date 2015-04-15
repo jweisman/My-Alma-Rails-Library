@@ -2,14 +2,14 @@ class SessionsController < ApplicationController
 
   def create
     user = User.from_omniauth(env["omniauth.auth"])
-    
+
     # Confirm user exists in Alma
     if valid_alma_user?(user.uid)
-  		flash[:alert] = "Your user doesn't exist in Alma. (#{user.uid})"
-  		render :error
+      session[:user_id] = user.id
+      redirect_to root_path
     else
-	    session[:user_id] = user.id
-	    redirect_to root_path    
+      flash.now[:alert] = "Your user doesn't exist in Alma. (#{user.uid})"
+      render :error    
     end    
   end
 
@@ -21,8 +21,16 @@ class SessionsController < ApplicationController
   private
   
   def valid_alma_user?(user_id)
-  	user = alma_api_get("/users/#{user_id}") 	
-  	return user["first_name"].nil?
+    begin
+  	   user = alma_api_get("/users/#{user_id}") 
+       return true
+    rescue RestClient::BadRequest => e
+      if e.response.body.include? "401861" # user not found
+        return false
+      else
+        raise e
+      end
+    end
   end
  
 end

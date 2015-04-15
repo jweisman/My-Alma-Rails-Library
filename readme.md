@@ -12,6 +12,8 @@ The original application does the following:
 * Requests- shows a list of the student's requests, and allow the user to cancel them
 * Fines & Fees- displays a students's fines, and integrates with PayPal to process fine payment
 
+More information about the integration with PayPal is available in this [blog entry](https://developers.exlibrisgroup.com/blog/Integrating-Alma-and-PayPal-with-the-Alma-REST-APIs).
+
 More information about the original C# app is available in this [blog entry](https://developers.exlibrisgroup.com/blog/Creating-a-Student-Portal-with-the-New-Alma-APIs).
 
 About the App
