@@ -1,11 +1,12 @@
 module Alma
 	require 'rest-client'
 	require 'json'
+	require 'nokogiri'
 	
 # Alma API methods
 
 	def alma_api_get(uri)
-		response =
+		response = 
 		 RestClient.get ENV['almaurl'] + uri,
 				accept: :json, 
 				authorization: 'apikey ' + ENV['apikey']
@@ -36,5 +37,28 @@ module Alma
 		RestClient.delete ENV['almaurl'] + uri,
 			authorization: 'apikey ' + ENV['apikey']
 	end	
+
+	# Alma helper methods
+
+	def alma_get_bib_availability(mms_id)
+		response = 
+		RestClient.get ENV['almaurl'] + 
+			"/bibs/#{mms_id}?expand=p_avail,e_avail,d_avail",
+			authorization: 'apikey ' + ENV['apikey']
+
+		bib = Nokogiri::XML(response)
+		print = bib.at_xpath('/bib/record/datafield[@tag="AVA"]/subfield[@code="e"]')
+		digital = bib.at_xpath('/bib/record/datafield[@tag="AVD"]')
+		electronic = bib.at_xpath('/bib/record/datafield[@tag="AVE"]')
+
+	    { :physical => 
+	    	{ :exists => print ? true : false,
+	    	  :available => print && print.text == 'available' ? true : false
+	    	},
+	      :online   => 
+	      	{ :exists => digital || electronic ? true : false
+	      	}
+	    }
+	end
   	
 end

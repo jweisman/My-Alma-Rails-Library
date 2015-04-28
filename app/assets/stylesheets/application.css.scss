@@ -11,6 +11,8 @@
  * file per style scope.
  *
  *= require bootstrap.min
+ *= require jquery.fancybox
+ *= require jquery.fancybox-buttons
  *= require_tree .
  *= require_self
  */

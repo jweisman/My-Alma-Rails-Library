@@ -13,5 +13,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require bootstrap.min
+//= require jquery.fancybox.pack
+//= require jquery.fancybox-buttons
 //= require turbolinks
 //= require_tree .

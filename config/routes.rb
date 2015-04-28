@@ -18,6 +18,12 @@ Rails.application.routes.draw do
 
   resource :card, only: [:show, :update], controller: 'card'
 
+  resource :catalog, only: [:show], controller: 'catalog' do
+    get 'availability'
+    get 'admin'
+    get 'harvest'
+  end
+
   # Authentication routes
   get 'auth/:provider/callback', to: 'sessions#create'
   get 'auth/failure', to: redirect('/')
