@@ -34,9 +34,9 @@ module S3UploadsHelper
         :success_action_status => '201'
       }
       # assume that all of the non-documented keys are 
-      _html_options = options.reject { |key, val| [:access_key_id, :acl, :max_file_size, :bucket, :secure].include?(key) }
+      _html_options = options.reject { |key, val| [:access_key_id, :acl, :max_file_size, :bucket, :region, :secure].include?(key) }
       # return the form html
-      construct_form_html(hidden_form_fields, policy_helper.options[:bucket], options[:secure], _html_options,  &block)
+      construct_form_html(hidden_form_fields, policy_helper.options[:bucket], policy_helper.options[:region], options[:secure], _html_options,  &block)
     end
 
     alias_method :s3_cors_fileupload_form, :s3_cors_fileupload_form_tag
@@ -48,9 +48,10 @@ module S3UploadsHelper
     end
 
     # hidden fields argument should be a hash of key value pairs (values may be blank if desired)
-    def construct_form_html(hidden_fields, bucket, secure = true, html_options = {}, &block)
+    def construct_form_html(hidden_fields, bucket, region, secure = true, html_options = {}, &block)
       # now build the html for the form
-      form_tag(secure == false ? "http://#{bucket}.s3.amazonaws.com" : "https://#{bucket}.s3.amazonaws.com", build_form_options(html_options)) do
+      region = region == "us-east-1" ? "s3" : "s3-#{region}" 
+      form_tag(secure == false ? "http://#{region}.amazonaws.com/#{bucket}" : "https://#{region}.amazonaws.com/#{bucket}", build_form_options(html_options)) do
         hidden_fields.map do |name, value|
           hidden_field_tag(name, value)
         end.join.html_safe + "

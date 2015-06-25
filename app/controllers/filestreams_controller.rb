@@ -53,8 +53,7 @@ class FilestreamsController < ApplicationController
   # used for s3_uploader
   def generate_key
     render json: {
-      key: ENV['institution'] + 
-        "/upload/#{@deposit.folder_name}/#{params[:filename]}",
+      key: "#{folder_name}/#{params[:filename]}",
       success_action_redirect: "/"
     }
   end
@@ -64,4 +63,8 @@ class FilestreamsController < ApplicationController
   def get_deposit
     @deposit = Deposit.find(params[:deposit_id])
   end
+  
+  def folder_name
+    return ENV['institution'] + "/upload/#{@deposit.import_profile}/#{@deposit.folder_name}"
+  end 
 end

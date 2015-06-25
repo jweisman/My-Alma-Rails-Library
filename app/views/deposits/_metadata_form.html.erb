@@ -1,8 +1,11 @@
 		<%= form_for @deposit do |f| %>
             <table class="table">
-                <tr><th>Title:</th><td> <%= text_field_tag "metadata[dc:title]", @deposit.metadata["dc:title"] || ""%></td></tr>
-                <tr><th>Creator:</th><td> <%= text_field_tag "metadata[dc:creator]", current_user["name"] %></td></tr>
-                <tr><th>Description:</th><td> <%= text_area_tag "metadata[dc:description]", @deposit.metadata["dc:description"] || ""%></td></tr>
+                <tr><th>Collection:</th><td><%= select :deposit, :import_profile, 
+                    @import_profiles.map{|i| [collection_name(i), i["id"].to_i]},
+                    { }, { disabled: !@deposit.new_record? }%></td></tr>
+                <tr><th>Title:</th><td> <%= text_field_tag "deposit[metadata][title]", @deposit.metadata["title"]%></td></tr>
+                <tr><th>Creator:</th><td> <%= text_field_tag "metadata[author]", current_user["name"] %></td></tr>
+                <tr><th>Description:</th><td> <%= text_area_tag "deposit[metadata][description]", @deposit.metadata["description"]%></td></tr>
           </table>
     <a href=<%= deposits_path%> class="btn btn-default">Cancel</a>    
 	<input class="btn btn-primary" type="submit" value="Next >>"/>

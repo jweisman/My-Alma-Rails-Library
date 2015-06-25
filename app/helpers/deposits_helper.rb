@@ -5,4 +5,8 @@ module DepositsHelper
 	    return '%.02f MB' % (bytes / 1000000) if bytes >= 1000000
 	    return '%.02f KB' % (bytes / 1000)
     end
+	
+	def collection_name(import_profile)
+		import_profile["digital_details"]["collection_assignment"]["desc"]
+	end
 end

@@ -16,6 +16,16 @@ require 'aws-sdk-core'
 			bucket: ENV['amazonbucket']
 		) if aws_connect
 	end
+	
+	def get_url
+	  signer ||= Aws::S3::Presigner.new(client: @s3) if aws_connect
+	  self.url = signer.presigned_url(:get_object, 
+	    bucket: bucket, key: key)
+	end	
+	
+	def head_object(key)
+	    @s3.head_object(bucket: ENV['amazonbucket'], key: key) if aws_connect
+	end	
 
 	def aws_connect
 		Aws.config[:ssl_verify_peer] = false

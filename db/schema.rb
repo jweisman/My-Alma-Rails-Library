@@ -14,6 +14,7 @@
 ActiveRecord::Schema.define(version: 20141201122932) do
 
   create_table "deposits", force: true do |t|
+    t.integer  "import_profile", limit: 8, null: false
     t.text     "metadata"
     t.string   "folder_name"
     t.string   "bucket"

@@ -14,7 +14,8 @@ require 'multi_json'
       @options = {
         :acl => 'public-read',
         :max_file_size => ENV['amazonmaxfilesize'] || 524288000,
-        :bucket => ENV['amazonbucket']
+        :bucket => ENV['amazonbucket'],
+        :region => ENV['amazonregion']
       }.merge(_options).merge(:secret_access_key => ENV['amazonsecretkey'])
     end
 

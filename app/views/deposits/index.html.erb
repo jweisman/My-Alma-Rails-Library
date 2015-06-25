@@ -8,15 +8,19 @@
     <div class="span12">
         <p>Here are your deposits in our repository:</p>
         <table class="table table-striped">
-            <tr><th>#</th><th>Title</th><th>Created Date</th><th>Status</th><th>Deposit Folder</th>
+            <tr><th>#</th><th>Title</th><th>Created Date</th><th>Status</th><th>Collection</th>
                 <th># of Files</th><th>Size of Files</th><th></th></tr>
             <% @deposits.each_with_index do |deposit,i| %>
                 <tr id="deposit_<%=deposit.id%>">
                     <td><%=i+1%></td>
-                    <td><%= deposit.metadata["dc:title"] || "N/A"%></td>
+                    <td><%= deposit.metadata["title"] || "N/A"%></td>
                     <td><%= deposit.created_at.localtime.strftime("%d-%b-%Y %H:%M")%></td>
                     <td><%= deposit.status%></td>
-                    <td><%= deposit.folder_name %></td>
+                    <td>
+                        <span data-toggle="tooltip" title="<%=deposit.folder_name%>">
+                            <%= collection_name(@import_profiles.find {|i| i["id"] == deposit.import_profile.to_s}) %></td>
+                        </span>
+                    </td>
                     <td><%= deposit.filestreams.count%></td>
                     <td><%= formatFileSize(deposit.filestreams.sum(:file_size))%></td>
                     <td>
