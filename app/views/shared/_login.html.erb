@@ -4,6 +4,6 @@
 		<span style="color:grey">Signed in as <strong><%= current_user.name %></strong></span>&nbsp; 
 		<%= link_to "Logout", signout_path, id: "sign_out", class: "btn btn-default btn-sm" %>
 	<% else %>
-		<%= link_to "Login with Google", "/auth/google_oauth2", id: "sign_in", class: "btn btn-default btn-sm" %>
+		<%= link_to "Login", login_path, id: "sign_in", class: "btn btn-default btn-sm" %>
 	<% end %>
 </div>

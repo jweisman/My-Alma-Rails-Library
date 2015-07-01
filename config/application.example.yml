@@ -7,6 +7,11 @@ defaults: &defaults
   paypayclientid: {PAYPAL_CLIENT_ID}
   paypalsecret: {PAYPAL_SECRET}
   pdsurl: {PDS URL}
+  institution: {Alma Institution}
+  domain: {AWS Cloud Search domain}
+  amazonscratchbucket: {AWS S3 scratch bucket}
+  oaiset: {OAI set}
+  alma: {Alma instance name}
 
 development:
   <<: *defaults

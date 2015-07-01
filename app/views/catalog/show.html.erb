@@ -39,8 +39,8 @@
                         'No subject defined': result['fields']['subject'].join(', ')%></p>
                 </div>
                 <div class="col-xs-12 col-md-4">
-                    <p><button id="physical-<%= result['id'] %>" class="btn btn-default popup" data-url="<%= "#{openurl}svc_dat=getit&rfr_id=info:sid/primo.exlibrisgroup.com&rft.mms_id=#{result['id']}&u.ignore_date_coverage=true}" %>"><i class="fa fa-building-o popup"></i> Physical copy</button></p>
-                    <p><button id="online-<%= result['id'] %>" class="btn btn-default popup" data-url="<%= "#{openurl}svc_dat=viewit&rfr_id=info:sid/primo.exlibrisgroup.com&rft.mms_id=#{result['id']}&u.ignore_date_coverage=true}" %>"><i class="fa fa-laptop"></i> On-line version</button>
+                    <p><button id="physical-<%= result['id'] %>" class="btn btn-default popup" data-url="<%= "#{openurl}svc_dat=getit&rfr_id=info:sid/primo.exlibrisgroup.com&rft.mms_id=#{result['id']}&u.ignore_date_coverage=true" %>"><i class="fa fa-building-o popup"></i> Physical copy</button></p>
+                    <p><button id="online-<%= result['id'] %>" class="btn btn-default popup" data-url="<%= "#{openurl}svc_dat=viewit&rfr_id=info:sid/primo.exlibrisgroup.com&rft.mms_id=#{result['id']}&u.ignore_date_coverage=true" %>"><i class="fa fa-laptop"></i> On-line version</button>
                     </p>                
                 </div>
             </article>

@@ -41,6 +41,9 @@ gem 'spring',        group: :development
 # Use Google OAuth gem for Google authentication
 gem "omniauth-google-oauth2", "~> 0.2.1"
 
+# Use for authentication with SAML
+gem 'omniauth-saml'
+
 # Use puma web server (http://puma.io)
 gem "puma", platforms: ["ruby"]
 
