@@ -1,0 +1,100 @@
+<% content_for :title do %>Catalog<% end %>
+
+<%= render "shared/message" %> 
+
+<div class="row-fluid">
+
+    <div class="span12">
+    <%= form_tag(catalog_path, method: :get) do %>
+    	<div class="input-group">
+            <%= text_field_tag 'q', params[:q], placeholder: 'Search our catalog...', class: 'form-control' %>
+            <span class="input-group-btn">
+                <button type="submit" class="btn btn-default" type="button">Search</button>
+            </span>
+        </div><!-- /input-group -->
+    <% end %>
+    </div>
+
+<p>&nbsp;</p>
+
+<% if @results %>
+    <div class="span12">
+        <hgroup>
+            <h3>Search Results</h3>
+            <h4 class="lead"><strong class="text-primary"><%= @results['hits']['found']%></strong> results were found for the search term <strong class="text-primary"><%=params[:q]%></strong></h4>                               
+        </hgroup>
+
+        <section>
+            <% @results['hits']['hit'].each_with_index do |result, i| %>
+
+            <article class="search-result row" id="<%=result['id']%>" 
+                data-url="<%=availability_catalog_path + "?mms_id=#{result['id']}"%>">
+                <div class="hidden-xs col-md-2" style="text-align: center">
+                    <i class="fa fa-<%= case result['fields']['type'] when 'Book'; 'book' when 'Journal'; 'newspaper-o'; else 'question-circle' end %> fa-5x"></i>
+                </div>            
+                <div class="col-xs-12 col-md-6">
+                    <h3 class="text-primary"><%= result['fields']['title'] %></h3>
+                    <p><strong>Author:</strong> <%=result['fields']['author']%></p>
+                    <p><strong>Subject:</strong> <%=result['fields']['subject'].nil? ? 
+                        'No subject defined': result['fields']['subject'].join(', ')%></p>
+                </div>
+                <div class="col-xs-12 col-md-4">
+                    <p><button id="physical-<%= result['id'] %>" class="btn btn-default popup" data-url="<%= "#{openurl}svc_dat=getit&rfr_id=info:sid/primo.exlibrisgroup.com&rft.mms_id=#{result['id']}&u.ignore_date_coverage=true" %>"><i class="fa fa-building-o popup"></i> Physical copy</button></p>
+                    <p><button id="online-<%= result['id'] %>" class="btn btn-default popup" data-url="<%= "#{openurl}svc_dat=viewit&rfr_id=info:sid/primo.exlibrisgroup.com&rft.mms_id=#{result['id']}&u.ignore_date_coverage=true" %>"><i class="fa fa-laptop"></i> On-line version</button>
+                    </p>                
+                </div>
+            </article>
+            <hr/>
+            <% end %>
+        </section>
+        <%= paging_html @results['hits']['found'], "start" %>
+    </div>
+
+<script>
+$(document).ready(function() {
+    $(".popup").click(function(e) {
+        var url = $(this).data('url');
+        //alert(url);
+        $.fancybox({
+            href: url,
+            closeBtn: true,
+            width: '75%',
+            height: '50%',
+            type: 'iframe'
+        });
+    });
+
+    // Check availability for each search result
+    $("article.search-result").each(function () {
+        var mms_id = $(this).attr('id');
+        $.get($(this).data('url'), function(data, status){
+            $('#physical-' + mms_id).toggleClass(function() {
+                if (!data.physical.exists) { 
+                    return "disabled";
+                } else if (data.physical.available) { 
+                    return "btn-default btn-success";
+                } else {
+                    return "btn-default btn-warning";
+                }
+            });
+            $('#online-' + mms_id).toggleClass(function() {
+                if (!data.online.exists) { 
+                    return "disabled";
+                } else {
+                    return "btn-default btn-success";
+                }
+            });        
+        });
+    });
+});
+</script>
+
+<% end %>
+
+<p>&nbsp;</p>
+
+<% if admin_user? %>
+<%= link_to "Administer Catalog", admin_catalog_path, class: "btn btn-primary" %>
+<% end %>
+
+</div>

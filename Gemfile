@@ -41,17 +41,23 @@ gem 'spring',        group: :development
 # Use Google OAuth gem for Google authentication
 gem "omniauth-google-oauth2", "~> 0.2.1"
 
+# Use for authentication with SAML
+gem 'omniauth-saml'
+
 # Use puma web server (http://puma.io)
 gem "puma", platforms: ["ruby"]
 
 # Use xml simple for XML parsing
 gem 'xml-simple', '~> 1.1.4'
 
+# Use Nokogiri for XSLT/XPath
+gem 'nokogiri'
+
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin]
 
 # Use REST Client- handles HTTP errors and redirects natively
-gem 'rest_client'
+gem 'rest-client'
 
 # Amazon SDK
 gem 'aws-sdk-core'

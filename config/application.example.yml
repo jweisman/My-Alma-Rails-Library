@@ -10,7 +10,12 @@ defaults: &defaults
   amazonaccesskey: {AMAZON_ACCESS_KEY}
   amazonsecretkey: {AMAZON_SECRET_KEY}
   amazonbucket: {AMAZON_BUCKET}
-  institution: {INSTITUTION_CODE}
+  amazonregion: us-east-1
+  institution: {Alma Institution}
+  domain: {AWS Cloud Search domain}
+  amazonscratchbucket: {AWS S3 scratch bucket}
+  oaiset: {OAI set}
+  alma: {Alma instance name}
 
 development:
   <<: *defaults

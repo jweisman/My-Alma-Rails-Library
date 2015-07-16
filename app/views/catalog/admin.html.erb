@@ -1,0 +1,44 @@
+<% content_for :title do %>Catalog - Admin<% end %>
+
+<%= render "shared/message" %> 
+
+<div class="row-fluid">
+    <div class="span12">
+    <h3>Catalog Stats</h3>
+    <span id="catalog_stats">
+    <%= image_tag "loading.gif" %>
+
+    </span>
+    <h3>Update Catalog</h3>
+
+    <button class="btn btn-primary harvest" data-url="<%= harvest_catalog_path %>">Update Catalog</button>
+    <button class="btn btn-default harvest" data-url="<%= harvest_catalog_path(reindex: true) %>"> Reindex Catalog</button>
+    <p>&nbsp;</p>
+
+<pre id="harvest_results"  style="visibility: hidden">
+Harvesting catalog....
+
+</pre>
+
+	<%= link_to "OK", admin_catalog_path, class: "btn btn-success", style: "visibility: hidden", id: "ok_button" %>
+	</div>
+</div>
+
+<script>
+	$('button.harvest').click(function() {
+		$("#harvest_results").css('visibility', 'visible');
+		ajax_stream_log($(this).data('url'), document.getElementById('harvest_results'),
+			function() { $("#ok_button").css('visibility', 'visible'); });
+  	});
+
+  	$( document ).ready(function() {
+    	$.getJSON ("<%= admin_catalog_path %>", function(data) {
+            var last_harvest = new Date(data.last_harvest);
+            last_harvest = isNaN(Date.parse(last_harvest)) ? "No last harvest time recorded" : last_harvest;
+    		$('#catalog_stats').html("<strong>Last Update:</strong> " +
+    			last_harvest + "<br/><strong>Number of records:</strong> " +
+    			data.cs_record_count);
+
+    	});
+	});
+</script>
