@@ -40,7 +40,7 @@ require 'nokogiri'
 		# Get domain endpoint from AWS
 		id ||= ENV['domain']
 		cloudsearch = Aws::CloudSearch::Client.new(region: 'us-east-1', 
-			credentials: aws_creds)
+			credentials: aws_creds('catalog'))
 		domain ||= 
 			cloudsearch.describe_domains(:domain_names => [ id ]).domain_status_list.find {
 		 		|d| d.domain_name == id }
@@ -74,9 +74,9 @@ require 'nokogiri'
 	# General
 	#########
 
-	def aws_creds
+	def aws_creds(context = 'digital')
 		Aws.config[:ssl_verify_peer] = false
-		@creds ||= Aws::Credentials.new(ENV['amazonaccesskey'], ENV['amazonsecretkey'])
+		@creds ||= Aws::Credentials.new(ENV["#{context}_amazonaccesskey"], ENV["#{context}_amazonsecretkey"])
 	end	
 
 
@@ -96,7 +96,7 @@ require 'nokogiri'
 	def sign_request(service, endpoint, method, body, content_type)
 		Aws.config[:ssl_verify_peer] = false
 	 
-		signer = Aws::Signers::V4.new(aws_creds, service, 'us-east-1')
+		signer = Aws::Signers::V4.new(aws_creds('catalog'), service, 'us-east-1')
 		r = 
 			Seahorse::Client::Http::Request.new(http_method: method, 
 				endpoint: endpoint,

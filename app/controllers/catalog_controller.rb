@@ -22,7 +22,6 @@ class CatalogController < ApplicationController
   end
 
   def harvest
-
     set_streaming_headers
     self.response_body = Enumerator.new do |y|
       y << "Retrieving 'from' time" + "\n"
@@ -61,7 +60,7 @@ class CatalogController < ApplicationController
        
       # write to date for next time
       y << "Storing 'to' time" + "\n"
-      s3_write_file ENV['amazonscratchbucket'], 'oai-discovery-from-time.txt', to_time
+      s3_write_file ENV['amazonbucket'], "#{ENV['institution']}/upload/scratch/oai-discovery-from-time.txt", to_time
        
       y << "Complete" + "\n"
 
@@ -91,7 +90,7 @@ class CatalogController < ApplicationController
   def oai_from_time
     from_time = ''
     # retrieve from date
-    RestClient.get("https://#{ENV['amazonscratchbucket']}.s3.amazonaws.com/oai-discovery-from-time.txt") {
+    RestClient.get("https://s3.amazonaws.com/#{ENV['amazonbucket']}/#{ENV['institution']}/upload/scratch/oai-discovery-from-time.txt") {
     |response, request, result| 
       if response.code == 200
         from_time = response

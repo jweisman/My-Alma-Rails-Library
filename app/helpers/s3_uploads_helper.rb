@@ -27,7 +27,7 @@ module S3UploadsHelper
       hidden_form_fields = {
         :key => '',
         'Content-Type' => '',
-        :AWSAccessKeyId => options[:access_key_id] || ENV['amazonaccesskey'],
+        :AWSAccessKeyId => options[:access_key_id] || ENV['digital_amazonaccesskey'],
         :acl => policy_helper.options[:acl],
         :policy => policy_helper.policy_document,
         :signature => policy_helper.upload_signature,

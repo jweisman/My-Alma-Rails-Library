@@ -30,17 +30,30 @@
             <article class="search-result row" id="<%=result['id']%>" 
                 data-url="<%=availability_catalog_path + "?mms_id=#{result['id']}"%>">
                 <div class="hidden-xs col-md-2" style="text-align: center">
-                    <i class="fa fa-<%= case result['fields']['type'] when 'Book'; 'book' when 'Journal'; 'newspaper-o'; else 'question-circle' end %> fa-5x"></i>
+                    <i class="fa fa-<%= case result['fields']['type'] when 'Book'; 'book' when 'Journal'; 'newspaper-o'; when 'Visual material'; 'picture-o'; else 'question-circle' end %> fa-5x"></i>
                 </div>            
                 <div class="col-xs-12 col-md-6">
-                    <h3 class="text-primary"><%= result['fields']['title'] %></h3>
+                    <h3><%= result['fields']['title'] %></h3>
                     <p><strong>Author:</strong> <%=result['fields']['author']%></p>
-                    <p><strong>Subject:</strong> <%=result['fields']['subject'].nil? ? 
-                        'No subject defined': result['fields']['subject'].join(', ')%></p>
+                    <% if result['fields']['subject'] %>
+                        <p><strong>Subject:</strong> <%=result['fields']['subject'].join(', ')%></p>
+                    <% end %>
+                    <% if result['fields']['collection'] %>
+                        <% result['fields']['collection'].each do |c| %>
+                            <% col = c.split("::") %>
+                            <% if !col[0].empty? # handle bug where collection is published without collection id %>
+                            <p>
+                            <%= link_to collection_path(col[0]), title: "Go to the #{col[1]} collection", rel: 'tooltip' do %>
+                                <i class="fa fa-folder-open"></i> <%= col[1] %>
+                            <% end %>
+                            <% end %>
+                            </p>
+                        <% end %>
+                    <% end %>
                 </div>
                 <div class="col-xs-12 col-md-4">
-                    <p><button id="physical-<%= result['id'] %>" class="btn btn-default popup" data-url="<%= "#{openurl}svc_dat=getit&rfr_id=info:sid/primo.exlibrisgroup.com&rft.mms_id=#{result['id']}&u.ignore_date_coverage=true" %>"><i class="fa fa-building-o popup"></i> Physical copy</button></p>
-                    <p><button id="online-<%= result['id'] %>" class="btn btn-default popup" data-url="<%= "#{openurl}svc_dat=viewit&rfr_id=info:sid/primo.exlibrisgroup.com&rft.mms_id=#{result['id']}&u.ignore_date_coverage=true" %>"><i class="fa fa-laptop"></i> On-line version</button>
+                    <p><button id="physical-<%= result['id'] %>" class="btn btn-default popup" data-url="<%= "#{openurl}svc_dat=getit&rft.mms_id=#{result['id']}" %>"><i class="fa fa-building-o popup"></i> Physical copy</button></p>
+                    <p><button id="online-<%= result['id'] %>" class="btn btn-default popup" data-url="<%= "#{openurl}svc_dat=viewit&rft.mms_id=#{result['id']}" %>"><i class="fa fa-laptop"></i> On-line version</button>
                     </p>                
                 </div>
             </article>

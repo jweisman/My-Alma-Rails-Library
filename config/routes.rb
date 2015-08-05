@@ -17,6 +17,10 @@ Rails.application.routes.draw do
   end
 
   resource :card, only: [:show, :update], controller: 'card'
+  
+  resources :collections, only: [:index, :show] do
+    get 'titles', on: :member
+  end
 
   resources :deposits do
     get :confirm, to: 'deposits#confirm', as: 'confirm'

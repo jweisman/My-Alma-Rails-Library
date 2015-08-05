@@ -1,0 +1,37 @@
+<% content_for :title do %>Digital Repository<% end %>
+
+<% if flash[:notice] %>
+<div class="alert alert-success"><%=flash[:notice]%></div>
+<% end %>
+
+<div class="row-fluid">
+       <!-- Collections Row -->
+        <div class="row">
+            <% @collections["collection"].each do |collection| %> 
+
+
+       <div class="col-md-4">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h3 class="panel-title"><%= link_to collection["name"], collection_path(collection["pid"]["value"]) %></h3>
+              </div>
+              <div class="panel-body">
+                    <div class="col-md-4 collection-thumb full-span" style="background-image:url('<%= "https://#{ENV["alma"]}.alma.exlibrisgroup.com#{collection["thumbnail"]}"%>');"> 
+                    </div>
+                    <div class="col-md-8">
+                    <p><%=collection["description"][0..350].gsub(/\s\w+\s*$/,'...')%></p>
+                    <p><%= link_to "View Collection", collection_path(collection["pid"]["value"]), class: "btn btn-primary" %></p>
+                    </div>
+              </div>
+            </div>
+        </div>
+            <% end %>          
+        </div>
+        <!-- /.row -->
+        <hr>
+    <div class="span12">
+
+    <%= link_to 'Add a new deposit', new_deposit_path, class: 'btn btn-primary'%>
+    </div>
+</div>
+

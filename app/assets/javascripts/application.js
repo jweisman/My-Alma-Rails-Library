@@ -14,7 +14,8 @@
 //= require jquery_ujs
 //= require bootstrap.min
 //= require jquery_fileupload
-//= require jquery.fancybox.pack
-//= require jquery.fancybox-buttons
+// No need for fancy box- using popup functionality provided by Alma
+// require jquery.fancybox.pack
+// require jquery.fancybox-buttons
 //= require turbolinks
 //= require_tree .

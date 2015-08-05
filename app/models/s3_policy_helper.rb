@@ -16,7 +16,7 @@ require 'multi_json'
         :max_file_size => ENV['amazonmaxfilesize'] || 524288000,
         :bucket => ENV['amazonbucket'],
         :region => ENV['amazonregion']
-      }.merge(_options).merge(:secret_access_key => ENV['amazonsecretkey'])
+      }.merge(_options).merge(:secret_access_key => ENV['digital_amazonsecretkey'])
     end
 
     # generate the policy document that amazon is expecting.
@@ -46,7 +46,7 @@ require 'multi_json'
         Base64.encode64(
           OpenSSL::HMAC.digest(
             OpenSSL::Digest::SHA1.new,
-            ENV['amazonsecretkey'],
+            ENV['digital_amazonsecretkey'],
             self.policy_document
           )
         ).gsub(/\n/, '')

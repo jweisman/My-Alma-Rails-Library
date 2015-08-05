@@ -1,0 +1,26 @@
+
+.portfolio-item {
+    margin-bottom: 25px;
+}
+
+.collection-thumb {
+	background-size:cover; 
+	background-repeat:no-repeat;
+	background-position:center center;
+	height: 350px;
+}
+
+.related-thumb {
+	max-height: 200px;
+	width: auto;
+}
+
+.full-span {
+	margin: -15px 5px -15px -15px;
+}
+
+@media (max-width: 767px) {
+  .full-span {
+    margin-bottom: 15px;
+  }
+}

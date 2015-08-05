@@ -7,13 +7,14 @@ defaults: &defaults
   paypayclientid: {PAYPAL_CLIENT_ID}
   paypalsecret: {PAYPAL_SECRET}
   pdsurl: {PDS URL}
-  amazonaccesskey: {AMAZON_ACCESS_KEY}
-  amazonsecretkey: {AMAZON_SECRET_KEY}
+  catalog_amazonaccesskey: {AMAZON_ACCESS_KEY}
+  catalog_amazonsecretkey: {AMAZON_SECRET_KEY}
+  digital_amazonaccesskey: {AMAZON_ACCESS_KEY}
+  digital_amazonsecretkey: {AMAZON_SECRET_KEY}
   amazonbucket: {AMAZON_BUCKET}
   amazonregion: us-east-1
   institution: {Alma Institution}
   domain: {AWS Cloud Search domain}
-  amazonscratchbucket: {AWS S3 scratch bucket}
   oaiset: {OAI set}
   alma: {Alma instance name}
 
