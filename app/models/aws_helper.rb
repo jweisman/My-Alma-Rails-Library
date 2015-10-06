@@ -2,14 +2,14 @@ module AwsHelper
 require 'aws-sdk-core'
 require 'rest-client'
 require 'nokogiri'
+include ERB::Util
 
 	#############
 	# CloudSearch
 	#############
 
 	def cs_search(q, start = 0)
-		JSON.parse RestClient.get "#{cs_search_endpoint}?q=#{q}&size=10&start=#{start}"
-		# "#{cs_search_endpoint}?q=#{q}&size=10&start=#{start}"
+		JSON.parse RestClient.get "#{cs_search_endpoint}?q=#{url_encode(q)}&size=10&start=#{start}"
 	end	
 
 	def cs_post(payload)

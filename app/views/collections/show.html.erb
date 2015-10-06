@@ -70,10 +70,26 @@
 <script>
 $(document).ready(function() {
 
-    // Load mash-up into hidden iFrame. Alma configured to popup delivery automatically
+    // Load mash-up 
     $("#titles").on("click", "a.popup", function(e){
         e.preventDefault();
-        $("#delivery").attr('src', $(this).attr('href'));
+        var url = $(this).attr('href');
+        
+        // hidden iFrame method (requires automatic open setting in Alma)
+        $("#delivery").attr('src', url);
+
+        // popUp method (screen flashes a bit in auto open setting)
+        /*
+        if (typeof $.fancybox != 'undefined') {
+            $.fancybox(
+                { href: url, closeBtn: true, width: '95%', height: '95%', preload: false,
+                  type: 'iframe', iframe: { preload: false } }, 
+                { helpers: { overlay: { opacity: 0.3 } } }
+            ); // fancybox
+        } else {
+            window.open(url);
+        }
+        */
     }); // click
 
     $("#titles").on("click", "a.paging-link", function(e) {
