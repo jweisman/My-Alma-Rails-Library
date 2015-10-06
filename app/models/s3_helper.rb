@@ -30,6 +30,6 @@ require 'aws-sdk-core'
 	def aws_connect
 		Aws.config[:ssl_verify_peer] = false
 		creds = Aws::Credentials.new(ENV['digital_amazonaccesskey'], ENV['digital_amazonsecretkey'])
-		@s3 ||= Aws::S3::Client.new(credentials: creds, region: 'us-east-1')
+		@s3 ||= Aws::S3::Client.new(credentials: creds, region: ENV['amazonregion'])
 	end
 end

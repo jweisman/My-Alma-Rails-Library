@@ -12,7 +12,7 @@ class DepositsController < ApplicationController
   def new
   	@deposit = Deposit.new()
     i = @import_profiles.select{|i| i["digital_details"]["collection_assignment"]["value"] == params["collection"]}
-    @deposit.import_profile = i.first["id"].to_i if i
+    @deposit.import_profile = i.first["id"].to_i if !i.empty?
   end
 
   def update
