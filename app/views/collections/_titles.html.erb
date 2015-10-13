@@ -1,13 +1,13 @@
 <div class="row">
 <% @titles["bib"].each_with_index do |bib,i| %>
     <div class="col-md-1 portfolio-item">
-        <a class="popup" href="<%= "#{openurl}svc_dat=viewit&rft.mms_id=#{bib['mms_id']}" %>">
+        <a class="popup" href="<%= "#{openurl(bib['mms_id'],'viewit')}" %>">
             <img class="img-repsonsive related-thumb" src="<%= thumburl(bib['mms_id'])%>" alt="">
         </a>
     </div>
     <div class="col-md-3">
             <p class="lead"><%=bib["title"]%></p>
-            <p><a class="btn btn-xs btn-default popup" href="<%= "#{openurl}svc_dat=viewit&rft.mms_id=#{bib['mms_id']}" %>">View item</a></p>
+            <p><a class="btn btn-xs btn-default popup" href="<%= "#{openurl(bib['mms_id'],'viewit')}" %>">View item</a></p>
     </div>  
     <% if (i+1).modulo(3) == 0 %>
     	</div>
