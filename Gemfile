@@ -23,8 +23,12 @@ gem 'sdoc', '~> 0.4.0',          group: :doc
 # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
 gem 'spring',        group: :development
 
+# 12factor support in production, https://github.com/heroku/rails_12factor
+gem 'rails_12factor', group: :production
+
 # Use Google OAuth gem for Google authentication
 gem "omniauth-google-oauth2", "~> 0.2.1"
+gem "omniauth-oauth2", '1.2.0'
 
 # Use for authentication with SAML
 gem 'omniauth-saml'
