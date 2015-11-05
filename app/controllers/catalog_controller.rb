@@ -9,7 +9,7 @@ class CatalogController < ApplicationController
   end
 
   def availability
-    bib = alma_get_bib_availability(params[:mms_id])
+    bib = alma_get_bibs_availability(params[:mms_ids])
     render json: bib
   end
 
