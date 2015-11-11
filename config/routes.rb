@@ -6,20 +6,20 @@ Rails.application.routes.draw do
 
   resources :fines, only: [:index] do
     collection do
-      get 'pay'
-      get 'confirm'
-      get 'validate'
+      get :pay
+      get :confirm
+      get :validate
     end
   end
 
   resources :requests, only: [:index] do
-    get 'cancel', on: :member
+    get :cancel, on: :member
   end
 
   resource :card, only: [:show, :update], controller: 'card'
   
   resources :collections, only: [:index, :show] do
-    get 'titles', on: :member
+    resources :titles, only: [:index, :show], to: 'collections#titles'
   end
 
   resources :deposits do
@@ -31,9 +31,9 @@ Rails.application.routes.draw do
   end
 
   resource :catalog, only: [:show], controller: 'catalog' do
-    get 'availability'
-    get 'admin'
-    get 'harvest'
+    get :availability
+    get :admin
+    get :harvest
   end
 
   # Authentication routes
