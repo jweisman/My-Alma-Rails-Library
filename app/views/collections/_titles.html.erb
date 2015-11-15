@@ -7,7 +7,10 @@
     </div>
     <div class="col-md-3">
             <p class="lead"><%=bib["title"]%></p>
-            <p><a class="btn btn-xs btn-default popup" href="<%= "#{openurl(bib['mms_id'],'viewit')}" %>">View item</a></p>
+            <p>
+                <a class="btn btn-xs btn-default popup" href="<%= "#{openurl(bib['mms_id'],'viewit')}" %>">View item</a>
+                <button type=button class="btn btn-xs btn-default lightgallery-dynamic" data-url="<%=collection_title_path params['id'], bib['mms_id']%>">View gallery</button>
+            </p>
     </div>  
     <% if (i+1).modulo(3) == 0 %>
     	</div>

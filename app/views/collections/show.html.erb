@@ -65,6 +65,7 @@
     <%= link_to "Add a new deposit to the #{@collection["name"]} collection", new_deposit_path(collection: @collection["name"]), class: 'btn btn-primary'%>
     </div>
 </div>
+
 <iframe style="display: none" id="delivery"></iframe>
 
 <script>
@@ -94,10 +95,16 @@ $(document).ready(function() {
 
     $("#titles").on("click", "a.paging-link", function(e) {
         $("#titles").html('<%= image_tag "loading.gif" %>');
-        var url='<%= titles_collection_path(@collection["pid"]["value"])%>';
+        var url='<%= collection_titles_path(@collection["pid"]["value"])%>';
         $("#titles").load(url + '?' + (this.href.split('?')[1] || ''));
         return false;
 
+    });
+
+    $("#titles").on("click", ".lightgallery-dynamic", function(e){
+        $.getJSON( $(this).data('url'), function( data ) {
+            $(this).lightGallery({dynamic: true, dynamicEl: data});
+        });       
     });
 });
 </script

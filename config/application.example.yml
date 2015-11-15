@@ -15,6 +15,7 @@ defaults: &defaults
   amazonregion: us-east-1
   institution: {Alma Institution}
   domain: {AWS Cloud Search domain}
+  amazonscratchbucket: {AWS S3 scratch bucket}
   oaiset: {OAI set}
   alma: {Alma instance name}
 
