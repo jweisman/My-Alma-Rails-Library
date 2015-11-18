@@ -27,11 +27,13 @@ module S3UploadsHelper
       hidden_form_fields = {
         :key => '',
         'Content-Type' => '',
-        :AWSAccessKeyId => options[:access_key_id] || ENV['digital_amazonaccesskey'],
         :acl => policy_helper.options[:acl],
         :policy => policy_helper.policy_document,
-        :signature => policy_helper.upload_signature,
-        :success_action_status => '201'
+        'X-Amz-Signature' => policy_helper.upload_signature,
+        :success_action_status => '201',
+        'X-Amz-Algorithm' => 'AWS4-HMAC-SHA256',
+        'X-Amz-Date' => policy_helper.options[:amz_date],
+        'X-Amz-Credential' => policy_helper.options[:amz_credential]
       }
       # assume that all of the non-documented keys are 
       _html_options = options.reject { |key, val| [:access_key_id, :acl, :max_file_size, :bucket, :region, :secure].include?(key) }

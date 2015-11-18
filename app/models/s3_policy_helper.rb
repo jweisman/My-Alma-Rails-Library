@@ -11,11 +11,15 @@ require 'multi_json'
 
     def initialize(_options = {})
       # default max_file_size to 500 MB if nothing is received
+      short_date = Time.now.strftime("%Y%m%d")
       @options = {
         :acl => 'public-read',
         :max_file_size => ENV['amazonmaxfilesize'] || 524288000,
         :bucket => ENV['amazonbucket'],
-        :region => ENV['amazonregion']
+        :region => ENV['amazonregion'], 
+        :amz_date_short => short_date,
+        :amz_date => Time.now.strftime("%Y%m%dT000000Z"),
+        :amz_credential => "#{ENV['digital_amazonaccesskey']}/#{short_date}/#{ENV['amazonregion']}/s3/aws4_request"
       }.merge(_options).merge(:secret_access_key => ENV['digital_amazonsecretkey'])
     end
 
@@ -33,22 +37,43 @@ require 'multi_json'
                 ["content-length-range", 0, options[:max_file_size]],
                 ["starts-with", "$utf8", ""],
                 ["starts-with", "$key", ""],
-                ["starts-with", "$Content-Type", ""]
+                ["starts-with", "$Content-Type", ""],
+                { "x-amz-credential": options[:amz_credential] },
+                { "x-amz-algorithm": "AWS4-HMAC-SHA256" }, 
+                { "x-amz-date": options[:amz_date] }
               ]
             }
           )
         ).gsub(/\n/, '')
     end
 
-    # sign our request by Base64 encoding the policy document.
+    # sign request - Amazon signature version 4
     def upload_signature
       @upload_signature ||=
-        Base64.encode64(
+        bin_to_hex(
           OpenSSL::HMAC.digest(
-            OpenSSL::Digest::SHA1.new,
-            ENV['digital_amazonsecretkey'],
+            'sha256',
+            getSignatureKey(ENV['digital_amazonsecretkey'], 
+              options[:amz_date_short],
+              options[:region],
+              's3'),
             self.policy_document
+            )
           )
-        ).gsub(/\n/, '')
     end
+
+    def getSignatureKey key, dateStamp, regionName, serviceName
+      kDate    = OpenSSL::HMAC.digest('sha256', "AWS4" + key, dateStamp)
+      kRegion  = OpenSSL::HMAC.digest('sha256', kDate, regionName)
+      kService = OpenSSL::HMAC.digest('sha256', kRegion, serviceName)
+      kSigning = OpenSSL::HMAC.digest('sha256', kService, "aws4_request")
+
+      kSigning
+    end
+
+    # from http://anthonylewis.com/2011/02/09/to-hex-and-back-with-ruby/
+    def bin_to_hex(s)
+      s.each_byte.map { |b| b.to_s(16) }.join
+    end   
+
   end
