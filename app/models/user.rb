@@ -1,16 +1,12 @@
 # Adapted from http://richonrails.com/articles/google-authentication-in-ruby-on-rails
 
+
 class User 
-  include ActiveModel::Serialization
   include ActiveModel::Model
 
   attr_accessor :provider, :id, :name, :email, :uid
   def initialize(attributes)
-    @provider = attributes[:provider]
-    @id = attributes[:id]
-    @name = attributes[:name]
-    @email = attributes[:email]
-    @uid = attributes[:id]
+    super
   end
 
   # Handle either OAuth or SAML

@@ -19,19 +19,18 @@
 
         <h3>Files:</h3>
         <table class="table table-striped">
-            <tr><th>#</th><th>File name</th><th>File Type</th><th>File Size</th></tr>
+            <tr><th>#</th><th>File name</th><th>File Size</th></tr>
             <% @deposit.filestreams.each_with_index do |file,i|  %>
 				<tr>
 					<td><%=i+1%></td>
-					<td><%=file["file_name"]%></td>
-					<td><%=file["file_content_type"]%></td>
-					<td><%=formatFileSize(file["file_size"])%></script></td>
+					<td><%=file.file_name%></td>
+					<td><%=formatFileSize(file.file_size)%></script></td>
 				</tr>
 			<% end %>
         </table>
 
         <p>Folder Name: <%=@deposit.folder_name%></p>
-       <a href=<%= deposits_path%> class="btn btn-default">Cancel</a>&nbsp;
-  	   <a href=<%= deposit_submit_path @deposit%> class="btn btn-primary">Submit Deposit</a> 
+       <a href=<%= deposit_path%> class="btn btn-default">Cancel</a>&nbsp;
+  	   <a href=<%= submit_deposit_path @deposit%> class="btn btn-primary">Submit Deposit</a> 
     </div>
 </div>

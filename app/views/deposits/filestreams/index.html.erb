@@ -4,7 +4,7 @@
 
 <div>
   <h2>Upload file(s)</h2>
-  <%= s3_cors_fileupload_form_tag :id => 'fileupload', :acl => 'private' %>
+  <%= s3_cors_fileupload_form_tag :id => 'fileupload' %>
 
   <div class="javascript-templates">
     <%= render 'template_upload' %>
@@ -12,8 +12,8 @@
     <%= render 'template_uploaded' %>
   </div>
 
-  <a href=<%= deposits_path%> class="btn btn-default">Cancel</a>&nbsp;
-  <a href=<%= deposit_confirm_path @deposit%> class="btn btn-primary">Next >></a> 
+  <a href=<%= deposit_path%> class="btn btn-default">Cancel</a>&nbsp;
+  <a href=<%= confirm_deposit_path %> class="btn btn-primary">Next >></a> 
 </div>
 
 <script>

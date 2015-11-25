@@ -1,12 +1,45 @@
-		<%= form_for @deposit do |f| %>
-            <table class="table">
-                <tr><th>Collection:</th><td><%= select :deposit, :import_profile, 
-                    @import_profiles.map{|i| [collection_name(i), i["id"].to_i]},
-                    { }, { disabled: !@deposit.new_record? }%></td></tr>
-                <tr><th>Title:</th><td> <%= text_field_tag "deposit[metadata][title]", @deposit.metadata["title"]%></td></tr>
-                <tr><th>Creator:</th><td> <%= text_field_tag "metadata[author]", current_user["name"] %></td></tr>
-                <tr><th>Description:</th><td> <%= text_area_tag "deposit[metadata][description]", @deposit.metadata["description"]%></td></tr>
-          </table>
-    <a href=<%= deposits_path%> class="btn btn-default">Cancel</a>    
-	<input class="btn btn-primary" type="submit" value="Next >>"/>
-    <% end %>
+<%= form_for @deposit, url: deposit_path, html: { class: 'form-horizontal' } do |f| %>
+
+    <div class="form-group">
+        <%= label :deposit, :import_profile, "Collection", class: "col-sm-2 control-label" %>
+        <div class="col-sm-10">
+            <%= select :deposit, :import_profile, 
+                @import_profiles.map{|i| [collection_name(i), i["id"].to_i]},
+                { }, { disabled: !@deposit.new_record?, class: "form-control"}%>
+        </div>
+    </div>
+    <div class="form-group<%= ' has-error' if @deposit.errors.include?(:metadata) %>">
+        <%= label :deposit, "metadata_title", "Title", class: "col-sm-2 control-label" %>
+        <div class="col-sm-10">
+            <%= text_field_tag "deposit[metadata][title]", @deposit.metadata[:title], class: "form-control" %>
+        </div>
+    </div>
+    <div class="form-group">
+        <%= label :deposit, "metadata_author", "Creator", class: "col-sm-2 control-label" %>
+        <div class="col-sm-10">
+            <%= text_field_tag "deposit[metadata][author]", current_user.name, class: "form-control" %>
+        </div>
+    </div>
+    <div class="form-group">
+        <%= label :deposit, "metadata_description", "Description", class: "col-sm-2 control-label" %>
+        <div class="col-sm-10">
+            <%= text_area_tag "deposit[metadata][description]", @deposit.metadata[:description], class: "form-control" %>
+        </div>
+    </div>        
+
+    <div class="form-group">
+        <div class="col-sm-2">
+            <% if !@deposit.new_record? %>
+                <label for="start_over" class='btn btn-warning'>Start Over</label>
+            <% end %>
+        </div>
+        <div class="col-sm-10">
+            <a href=<%= collections_path%> class="btn btn-default">Cancel</a>  
+            <input class="btn btn-primary" type="submit" value="Next >>"/>      
+        </div>
+    </div>
+<% end %>
+
+<%= button_to 'Start Over', {action: 'destroy'}, method: :delete,
+    data: {  confirm: 'Are you sure you want to start over?' }, 
+    style: "visibility: hidden", id: 'start_over' %>

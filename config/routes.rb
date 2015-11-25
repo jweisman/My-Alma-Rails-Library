@@ -22,11 +22,11 @@ Rails.application.routes.draw do
     resources :titles, only: [:index, :show], to: 'collections#titles'
   end
 
-  resources :deposits do
+  resource :deposit, only: [:show, :create, :destroy] do
     get :confirm, to: 'deposits#confirm', as: 'confirm'
     get :submit, to: 'deposits#submit', as: 'submit'
-    resources :filestreams, :only => [:index, :create, :destroy] do
-      get :generate_key, :on => :collection
+    resources :filestreams, only: [:index, :create, :destroy], on: :collection do
+      get :generate_key, on: :collection
     end
   end
 

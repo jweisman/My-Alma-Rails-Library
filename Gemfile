@@ -28,7 +28,8 @@ gem 'rails_12factor', group: :production
 
 # Use Google OAuth gem for Google authentication
 gem "omniauth-google-oauth2", "~> 0.2.1"
-gem "omniauth-oauth2", '1.2.0'
+# Specify version until https://github.com/intridea/omniauth-oauth2/issues/81 is fixed
+gem "omniauth-oauth2", '1.3.1'
 
 # Use for authentication with SAML
 gem 'omniauth-saml'
