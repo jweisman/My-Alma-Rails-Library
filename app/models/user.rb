@@ -1,17 +1,22 @@
 # Adapted from http://richonrails.com/articles/google-authentication-in-ruby-on-rails
 
-class User < ActiveRecord::Base
+
+class User 
+  include ActiveModel::Model
+
+  attr_accessor :provider, :id, :name, :email, :uid
+  def initialize(attributes)
+    super
+  end
+
   # Handle either OAuth or SAML
   def self.from_omniauth(auth)
-    where(provider: auth.provider, uid: auth.uid).first_or_initialize.tap do |user|
-      user.provider = auth.provider
-      user.uid = auth.uid
-      user.name = auth.info.name || auth.extra.raw_info["User.FirstName"] + " " + auth.extra.raw_info["User.LastName"]
-      user.email = auth.info.email || auth.extra.raw_info["User.email"] 
-      user.oauth_token = auth.credentials.token
-      user.oauth_expires_at = Time.at(auth.credentials.expires_at) if auth.credentials.expires_at != nil
-      user.save!
-    end
+    self.new({
+    provider: auth.provider,
+    id: auth.uid,
+    name: auth.info.name || auth.extra.raw_info["User.FirstName"] + " " + auth.extra.raw_info["User.LastName"],
+    email: auth.info.email || auth.extra.raw_info["User.email"]
+    })
   end
   
   # Add support for user from PDS

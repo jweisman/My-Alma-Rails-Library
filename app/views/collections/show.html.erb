@@ -62,7 +62,7 @@
 
     <div class="span12">
 
-    <%= link_to "Add a new deposit to the #{@collection["name"]} collection", new_deposit_path(collection: @collection["name"]), class: 'btn btn-primary'%>
+    <%= link_to "Add a new deposit to the #{@collection["name"]} collection", deposit_path(collection: @collection["pid"]["value"]), class: 'btn btn-primary'%>
     </div>
 </div>
 

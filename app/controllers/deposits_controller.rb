@@ -1,81 +1,54 @@
 class DepositsController < ApplicationController
 	before_action :require_valid_user
-	before_action :get_deposit, except: [:index, :create, :new]
+	before_action :get_deposit
   before_action :import_profiles, on: [:index, :new, :edit]
 
-  include S3Helper
+  def show
+    if @deposit.import_profile == nil
+      i = @import_profiles.select{|i| i["digital_details"]["collection_assignment"]["value"] == params["collection"]}
+      @deposit.import_profile = i.first["id"].to_i if !i.empty?
+    end
 
-  def index
-  	@deposits = Deposit.where("user_id=? and status != 'DELETED'", current_user)
-  end
+    respond_to do |format|
+      format.html 
+      format.json { render json: @deposit.to_json }
+    end
 
-  def new
-  	@deposit = Deposit.new()
-    i = @import_profiles.select{|i| i["digital_details"]["collection_assignment"]["value"] == params["collection"]}
-    @deposit.import_profile = i.first["id"].to_i if !i.empty?
-  end
-
-  def update
-  	@deposit.update!(params[:deposit].permit(md_params))
-  	redirect_to deposit_filestreams_path(@deposit)
   end
 
   def create
-  	@deposit = Deposit.new(params[:deposit].permit(:import_profile, md_params))
-    @deposit.user = current_user
-  	@deposit.save
-  	write_file "#{folder_name}/.lock", nil
-  	redirect_to deposit_filestreams_path(@deposit)
+    @deposit.attributes = params[:deposit].permit(:import_profile, md_params)
+    session[:deposit] = @deposit.to_json
+    if @deposit.valid?
+      @deposit.lock
+      redirect_to deposit_filestreams_path
+    else
+      render :show
+    end
   end
 
   def destroy
-    @deposit.destroy
-	 	head :no_content 
+    @deposit.delete_filestreams
+    session[:deposit] = nil
+	 	redirect_to deposit_path, notice: "Your deposit was successfully deleted."
   end
 
   def submit
-  	save_metadata_file
-  	delete_file "#{folder_name}/.lock"
-  	@deposit.status = "SUBMITTED"
-  	@deposit.save
-  	redirect_to deposits_path, notice: "Your deposit was successfully submitted."
+  	@deposit.save_metadata_file
+    @deposit.unlock
+    session[:deposit] = nil 
+  	redirect_to deposit_path, notice: "Your deposit was successfully submitted."
   end
 
   private
   
   def md_params
-    {:metadata => [:title, :description]}
+    {:metadata => [:title, :author, :description]}
   end
 
   def get_deposit
-  	@deposit = Deposit.find(params[:id] || params[:deposit_id])
-  end
-
-  def save_metadata_file
-    content = 
-      %Q(
-        <collection>
-           <record>
-              <leader>     aas          a     </leader>
-              <controlfield tag="008">       #{Time.now.strftime("%Y")}</controlfield>
-              <datafield tag="100" ind1="1" ind2=" ">
-                <subfield code="a">#{@deposit.metadata["author"]}</subfield>
-              </datafield>
-              <datafield tag="245" ind1="1" ind2="2">
-                <subfield code="a">#{@deposit.metadata["title"]}</subfield>
-              </datafield>
-              <datafield tag="260" ind1=" " ind2=" ">
-                <subfield code="c">#{Time.now.strftime("%B %d, %Y")}</subfield>
-              </datafield>
-           </record>
-         </collection> 
-      )
-  	
-  	write_file "#{folder_name}/marc.xml",	content
-  end
-
-  def folder_name
-    ENV['institution'] + "/upload/#{@deposit.import_profile}/#{@deposit.folder_name}"
+    @deposit ||= Deposit.new
+    @deposit.attributes = JSON.parse(session[:deposit], symbolize_names: true) if session[:deposit]
   end
   
   def import_profiles

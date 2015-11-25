@@ -1,47 +1,39 @@
 # Code based on s3_cors_fileupload
 # https://github.com/batter/s3_cors_fileupload
 
-include S3Helper
+class Filestream 
+  include ActiveModel::Model
+  include S3Helper
 
-class Filestream < ActiveRecord::Base
-  belongs_to :deposit
+  require 'base64'
 
-  validates_presence_of :file_name, :file_content_type, :file_size, :key, :bucket, :deposit
+  attr_accessor :file_name, :file_size, :key, :url
 
-  before_validation(:on => :create) do
-    self.file_name = key.split('/').last if key
-    self.url = get_url
-    self.file_size ||= s3_object.content_length rescue nil
-    self.file_content_type ||= s3_object.content_type rescue nil
+  def initialize(attributes={})
+    super
+    self.file_name ||= key.split('/').last if key
+    self.url = get_url(key) if key
   end
 
-  # cleanup; destroy corresponding file on S3
-  after_destroy { 
-    delete_file key
-  }
-
-  # handle objects with private scope
-  after_find :get_url
+  def attributes=(hash)
+    hash.each do |key, value|
+      send("#{key}=", value)
+    end
+  end
 
   def to_jq_upload
     { 
-      'id' => id,
+      #'id' => id,
       'name' => file_name,
       'size' => file_size,
       'url' => url,
       'image' => self.is_image?,
-      'delete_url' => Rails.application.routes.url_helpers.deposit_filestream_path(deposit_id,
-        self, :format => :json)
+      'delete_url' => Rails.application.routes.url_helpers.deposit_filestream_path(Base64.encode64(self.file_name), :format => :json)
     }
   end
 
   def is_image?
-    !!file_content_type.try(:match, /image/)
-  end
-
-  def s3_object
-    @s3_object ||= head_object (key) if key
-    rescue nil 
+    !!file_name.try(:match, '[^\s]+(\.(?i)(jpg|png|gif|bmp))$')
   end
 
 end
