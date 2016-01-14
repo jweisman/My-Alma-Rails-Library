@@ -13,7 +13,6 @@
 //= require jquery
 //= require jquery_ujs
 //= require bootstrap.min
-//= require jquery_fileupload
 // No need for fancy box- using popup functionality provided by Alma
 // require jquery.fancybox.pack
 // require jquery.fancybox-buttons

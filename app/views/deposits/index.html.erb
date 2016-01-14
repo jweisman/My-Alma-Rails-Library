@@ -1,6 +1,6 @@
 <% # Not in use at the moment %>
 
-<% content_for :title do %>Digital Repository<% end %>
+<% content_for :title do %>Digital Deposits<% end %>
 
 <% if flash[:notice] %>
 <div class="alert alert-success"><%=flash[:notice]%></div>
@@ -10,38 +10,26 @@
     <div class="span12">
         <p>Here are your deposits in our repository:</p>
         <table class="table table-striped">
-            <tr><th>#</th><th>Title</th><th>Created Date</th><th>Status</th><th>Collection</th>
-                <th># of Files</th><th>Size of Files</th><th></th></tr>
+            <tr><th>#</th><th>Title</th><th>Created Date</th><th>ID</th><th>Status</th>
+            <!--<th>Collection</th><th># of Files</th><th>Size of Files</th>-->
+            <th></th></tr>
             <% @deposits.each_with_index do |deposit,i| %>
-                <tr id="deposit_<%=deposit.id%>">
+                <tr id="deposit_<%=deposit[:id]%>">
                     <td><%=i+1%></td>
-                    <td><%= deposit.metadata["title"] || "N/A"%></td>
-                    <td><%= deposit.created_at.localtime.strftime("%d-%b-%Y %H:%M")%></td>
-                    <td><%= deposit.status%></td>
-                    <td>
-                        <span data-toggle="tooltip" title="<%=deposit.folder_name%>">
-                            <%= collection_name(@import_profiles.find {|i| i["id"] == deposit.import_profile.to_s}) %></td>
-                        </span>
-                    </td>
-                    <td><%= deposit.filestreams.count%></td>
-                    <td><%= formatFileSize(deposit.filestreams.sum(:file_size))%></td>
+                    <td><%= deposit[:title] || "N/A"%></td>
+                    <td><%= deposit[:created_date]%></td>
+                    <td><%= deposit[:id]%></td>
+                    <td>Deposited</td>
                     <td>
                         <%= button_tag '', data: {
                             type: 'DELETE',
                             url: deposit_path(deposit),
-                            object_id: deposit.id
+                            object_id: deposit[:id]
                         }, class: 'btn btn-default delete' do%>
                         <i class="glyphicon glyphicon-trash"></i>
                         <% end %>
-                        <!--
-                        <button class="btn btn-default delete" data-type="DELETE" data-url="<%=deposit_path(deposit)%>" data-object_id="<%=deposit.id%>" data-confirmation="Are you sure?" onclick="delete_file(<%=deposit.id%>)">
-                        <i class="glyphicon glyphicon-trash"></i>
-                        </button>
-                        -->
-                        <% if deposit.status != "SUBMITTED" %>
-                        <a class="btn btn-default" href="<%=edit_deposit_path deposit%>">
+                        <a class="btn btn-default" href="<%=edit_deposit_path deposit[:id]%>">
                         <i class="glyphicon glyphicon-pencil"></i>
-                        <% end %>
                         </a>
                     </td>
                 </tr>

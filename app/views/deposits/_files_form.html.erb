@@ -1,0 +1,11 @@
+    <div class="form-group">
+        <%= label_tag 'files', 'Add files', class: "col-sm-2 control-label" %>
+        <div class="col-sm-10">
+            <%= file_field_tag "files[]", multiple: true, class: "form-control file-loading" %>
+        </div>
+    </div>
+    <script>
+			// with plugin options
+			$("#files_").fileinput({'showUpload':false, 'allowedPreviewTypes':['image']});
+		</script>
+

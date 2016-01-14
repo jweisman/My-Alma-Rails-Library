@@ -50,4 +50,10 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin]
 gem 'rest-client'
 
 # Amazon SDK
-gem 'aws-sdk-core'
+gem 'aws-sdk'
+
+# Sword client library
+gem 'sword2ruby', :path => "/Inetpub/rails/sword2ruby"
+
+# To create ZIP files for deposits
+gem 'rubyzip'

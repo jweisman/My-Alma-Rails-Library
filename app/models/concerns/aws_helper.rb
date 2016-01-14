@@ -1,5 +1,5 @@
 module AwsHelper
-require 'aws-sdk-core'
+require 'aws-sdk'
 require 'rest-client'
 require 'nokogiri'
 include ERB::Util
@@ -66,6 +66,14 @@ include ERB::Util
 		    content_type: 'text/plain'
 		) 
 	end	
+
+	def s3_list_objects(bucket, prefix)
+		Aws.config[:ssl_verify_peer] = false
+
+  	s3 ||= Aws::S3::Client.new(region: 'us-east-1')
+  	bucket = Aws::S3::Bucket.new(bucket, { client: s3 })
+  	bucket.objects( { prefix: prefix })		
+	end
 
 
 	private

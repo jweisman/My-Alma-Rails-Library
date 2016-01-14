@@ -22,12 +22,9 @@ Rails.application.routes.draw do
     resources :titles, only: [:index, :show], to: 'collections#titles'
   end
 
-  resource :deposit, only: [:show, :create, :destroy] do
-    get :confirm, to: 'deposits#confirm', as: 'confirm'
-    get :submit, to: 'deposits#submit', as: 'submit'
-    resources :filestreams, only: [:index, :create, :destroy], on: :collection do
-      get :generate_key, on: :collection
-    end
+  resources :deposits do
+    # TEMPORARY
+    get :view
   end
 
   resource :catalog, only: [:show], controller: 'catalog' do

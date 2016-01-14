@@ -9,4 +9,8 @@ module DepositsHelper
 	def collection_name(import_profile)
 		import_profile["digital_details"]["collection_assignment"]["desc"]
 	end
+
+	def decode(url)
+		URI.unescape(url)
+	end
 end
