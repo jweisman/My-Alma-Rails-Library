@@ -1,4 +1,4 @@
-require 'Sword2Ruby'
+require 'sword2ruby'
 
 module SwordHelper
 	def sword_sd
