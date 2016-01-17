@@ -70,7 +70,7 @@ include ERB::Util
 	def s3_list_objects(bucket, prefix)
 		Aws.config[:ssl_verify_peer] = false
 
-  	s3 ||= Aws::S3::Client.new(region: 'us-east-1')
+		s3 ||= Aws::S3::Client.new(credentials: aws_creds, region: 'us-east-1')
   	bucket = Aws::S3::Bucket.new(bucket, { client: s3 })
   	bucket.objects( { prefix: prefix })		
 	end
