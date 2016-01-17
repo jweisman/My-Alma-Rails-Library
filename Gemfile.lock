@@ -1,5 +1,6 @@
-PATH
-  remote: C:/Inetpub/rails/sword2ruby
+GIT
+  remote: https://github.com/jweisman/sword2ruby.git
+  revision: 3e6563a5c6e14f87a54bd03b3ba89728c6ed6e17
   specs:
     sword2ruby (1.0.1)
       atom-tools (~> 2.0.5)
