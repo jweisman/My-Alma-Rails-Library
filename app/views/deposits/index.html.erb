@@ -21,13 +21,6 @@
                     <td><%= deposit[:id]%></td>
                     <td>Deposited</td>
                     <td>
-                        <%= button_tag '', data: {
-                            type: 'DELETE',
-                            url: deposit_path(deposit),
-                            object_id: deposit[:id]
-                        }, class: 'btn btn-default delete' do%>
-                        <i class="glyphicon glyphicon-trash"></i>
-                        <% end %>
                         <a class="btn btn-default" href="<%=edit_deposit_path deposit[:id]%>">
                         <i class="glyphicon glyphicon-pencil"></i>
                         </a>

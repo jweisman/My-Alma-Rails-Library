@@ -1,3 +1,5 @@
+require 'base64'
+
 module DepositsHelper
 	def formatFileSize(bytes) 
 	    return '' if !bytes.is_a? Numeric
@@ -13,4 +15,11 @@ module DepositsHelper
 	def decode(url)
 		URI.unescape(url)
 	end
+
+  def base64_encode(bin, padding: false)
+  	str = Base64.strict_encode64(bin).tr("+/", "-_")
+  	str = str.delete("=") unless padding
+  	str
+  end
+
 end

@@ -26,7 +26,8 @@
       <div class="form-group">
         <div class="col-sm-10">
           <a href=<%= deposits_path%> class="btn btn-default">Cancel</a>  
-          <%= button_tag "Submit Deposit", class: "btn btn-primary", 'data-disable-with' => "<i class='fa fa-spinner fa-spin'></i> Uploading...".html_safe %>
+          <%= button_tag "Save Deposit as Draft", class: "btn btn-primary" %>
+          <%= button_tag "Submit Deposit", class: "btn btn-success", 'data-disable-with' => "<i class='fa fa-spinner fa-spin'></i> Uploading...".html_safe %>
         </div>
       </div>
     </div>

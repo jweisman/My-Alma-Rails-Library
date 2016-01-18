@@ -69,6 +69,18 @@ class DepositsController < ApplicationController
     @files = s3_list_objects 'almad-test', "TR_INTEGRATION_INST/upload/sword/#{params[:deposit_id]}"
   end
 
+  def delete_file
+    deposit = sword_get_deposit(params[:deposit_id])
+    file = base64_decode(params[:id])
+    # validate file URI
+    if deposit.entry.sword_derived_resource_links.any? { |l| l.href == file }
+      sword_delete_file file
+      head :no_content
+    else
+      render :nothing => true, :status => 400
+    end
+  end
+
   def destroy
     ## TODO
     @deposit.delete_filestreams

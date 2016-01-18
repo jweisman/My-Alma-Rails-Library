@@ -53,7 +53,10 @@ module SwordHelper
 			:content_type=>"application/zip", 
 			:packaging=>"http://purl.org/net/sword/package/SimpleZip"
 		)
+	end
 
+	def sword_delete_file(uri)
+		sword_connection.delete uri
 	end
 
   def dc_fields

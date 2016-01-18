@@ -25,6 +25,7 @@ Rails.application.routes.draw do
   resources :deposits do
     # TEMPORARY
     get :view
+    resources :files, only: :destroy, to: 'deposits#delete_file'
   end
 
   resource :catalog, only: [:show], controller: 'catalog' do

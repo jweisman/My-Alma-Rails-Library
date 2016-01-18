@@ -1,7 +1,7 @@
-module ApplicationHelper
-	include AlmaHelper
+include AlmaHelper
 
-	def paging_html(hits, start_param = 'start', page_size = 10)
+module ApplicationHelper
+    def paging_html(hits, start_param = 'start', page_size = 10)
                 
         start = (params[start_param] || 0).to_i
         number_of_buttons = 5

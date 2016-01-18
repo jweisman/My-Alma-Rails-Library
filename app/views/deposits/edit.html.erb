@@ -11,8 +11,7 @@
       <%= render "metadata_form" %>
 	    <div class="form-group">
 	      <div class="col-sm-10">
-	        <a href=<%= deposits_path%> class="btn btn-default">Cancel</a>  
-          <%= button_tag "Update Deposit", class: "btn btn-primary", 'data-disable-with' => "<i class='fa fa-spinner fa-spin'></i> Updating...".html_safe %>    
+          <%= button_tag "Update Metadata", class: "btn btn-primary", 'data-disable-with' => "<i class='fa fa-spinner fa-spin'></i> Updating...".html_safe %>    
 	      </div>
 	    </div>
     </div>
@@ -23,11 +22,19 @@
         <table class="table table-striped">
           <tr><th>#</th><th>File name</th><th>File type</th><th></th></tr>
           <% @deposit[:files].each_with_index do |file,i|  %>
-						<tr>
+						<tr id="file_<%=base64_encode(file.href)%>">
 							<td><%=i+1%></td>
 							<td><%=decode(file.href.split('/')[-1])%></td>
 							<td><%=file.type%></td>
-							<td><i class="glyphicon glyphicon-trash"></i></td>
+							<td>
+	              <%= button_tag '', data: {
+	                  type: 'DELETE',
+	                  url: deposit_file_path(params[:id], base64_encode(file.href)),
+	                  object_id: base64_encode(file.href)
+	              }, class: 'btn btn-default delete' do%>
+	              <i class="glyphicon glyphicon-trash"></i>
+	              <% end %>								
+							</td>
 						</tr>
 					<% end %>
         </table>
@@ -42,4 +49,26 @@
 	    </div>
     	<% end %>
     </div>
+
+    <div class="span12">
+    	<h2>&nbsp;</h2>
+      <a href=<%= deposits_path%> class="btn btn-default">Cancel</a>  
+      <%= button_tag "Withdraw Deposit", class: "btn btn-danger", 'data-disable-with' => "<i class='fa fa-spinner fa-spin'></i> Withdrawing...".html_safe %>    
+      <%= button_tag "Submit Deposit", class: "btn btn-success", 'data-disable-with' => "<i class='fa fa-spinner fa-spin'></i> Submitting...".html_safe %>    
+    </div>
  </div>
+
+
+<script>
+// Delete deposit and hide row
+$(".delete").click(function() {
+    row = $('#file_' + $(this).data('object-id'));
+    $.ajax({
+        url: $(this).data('url'),
+        type: $(this).data('type'),
+        success: function(result) { 
+           row.hide();
+        }
+    });
+});
+</script>
