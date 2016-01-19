@@ -5,7 +5,7 @@ class CardController < ApplicationController
   def update
   	@user["first_name"] = params[:user]["first_name"]
   	@user["last_name"]  = params[:user]["last_name"]
- 	  newuser = alma_api_put("/users/#{current_user.uid}", @user)
+ 	  newuser = alma_api_put("/users/#{current_user.id}", @user)
 
   	redirect_to card_path, notice: "Your information was updated."
   end
@@ -13,7 +13,7 @@ class CardController < ApplicationController
   private
   
   def get_user
-  	@user = alma_api_get("/users/#{current_user.uid}")
+  	@user = alma_api_get("/users/#{current_user.id}")
   end
   
 end

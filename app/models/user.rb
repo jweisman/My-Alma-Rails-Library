@@ -4,7 +4,7 @@
 class User 
   include ActiveModel::Model
 
-  attr_accessor :provider, :id, :name, :email, :uid
+  attr_accessor :provider, :id, :name, :email
   def initialize(attributes)
     super
   end
