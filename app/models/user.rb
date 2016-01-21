@@ -14,7 +14,7 @@ class User
     self.new({
     provider: auth.provider,
     id: auth.uid,
-    name: auth.info.name || auth.extra.raw_info["User.FirstName"] + " " + auth.extra.raw_info["User.LastName"],
+    name: auth.info.name || (auth.extra.raw_info["User.FirstName"] || "") + " " + auth.extra.raw_info["User.LastName"],
     email: auth.info.email || auth.extra.raw_info["User.email"]
     })
   end
