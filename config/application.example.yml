@@ -10,8 +10,12 @@ defaults: &defaults
   institution: {Alma Institution}
   domain: {AWS Cloud Search domain}
   amazonscratchbucket: {AWS S3 scratch bucket}
+  amazonaccesskey: {AWS access key for scratch bucket}
+  amazonsecretkey: {AWS secret key for scratch bucket}
   oaiset: {OAI set}
   alma: {Alma instance name}
+  root_url: {root URL of the application}
+  alma_auth_secret: {auth secret for Alma authentication}
 
 development:
   <<: *defaults

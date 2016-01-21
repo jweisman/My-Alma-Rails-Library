@@ -1,3 +1,11 @@
+GIT
+  remote: https://github.com/k1w1/omniauth-jwt
+  revision: afb96feb964c826a3af3748f730b3879dea0a5c0
+  specs:
+    omniauth-jwt (0.0.3)
+      jwt
+      omniauth (~> 1.1)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -46,7 +54,7 @@ GEM
     execjs (2.5.2)
     faraday (0.9.1)
       multipart-post (>= 1.2, < 3)
-    ffi (1.9.10)
+    ffi (1.9.10-x86-mingw32)
     hashie (3.4.1)
     hike (1.2.3)
     http-cookie (1.0.2)
@@ -185,6 +193,7 @@ DEPENDENCIES
   jquery-rails
   nokogiri
   omniauth-google-oauth2 (~> 0.2.1)
+  omniauth-jwt!
   omniauth-saml
   puma
   rails (= 4.1.6)
