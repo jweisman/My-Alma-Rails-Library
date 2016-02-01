@@ -35,7 +35,7 @@ gem "omniauth-oauth2", '1.3.1'
 gem 'omniauth-saml'
 
 # Use for authentication with Alma via JWT
-gem 'omniauth-jwt', git: 'https://github.com/k1w1/omniauth-jwt'
+gem 'omniauth-jwt', git: 'https://github.com/k1w1/omniauth-jwt.git'
 
 # Use puma web server (http://puma.io)
 gem "puma", platforms: ["ruby"]
