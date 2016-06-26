@@ -19,7 +19,7 @@
                     <div class="col-md-4 collection-thumb full-span" style="background-image:url('<%= "https://#{ENV["alma"]}.alma.exlibrisgroup.com#{collection["thumbnail"]}"%>');"> 
                     </div>
                     <div class="col-md-8">
-                    <p><%=collection["description"][0..350].gsub(/\s\w+\s*$/,'...')%></p>
+                    <p><%=collection["description"][0..350].gsub(/\s\w+\s*$/,'...') if collection["description"]%></p>
                     <p><%= link_to "View Collection", collection_path(collection["pid"]["value"]), class: "btn btn-primary" %></p>
                     </div>
               </div>

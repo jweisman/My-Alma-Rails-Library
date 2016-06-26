@@ -7,7 +7,7 @@ GIT
       hpricot (~> 0.8.3)
 
 GIT
-  remote: https://github.com/k1w1/omniauth-jwt
+  remote: https://github.com/k1w1/omniauth-jwt.git
   revision: afb96feb964c826a3af3748f730b3879dea0a5c0
   specs:
     omniauth-jwt (0.0.3)
@@ -223,3 +223,6 @@ DEPENDENCIES
   tzinfo-data
   uglifier (>= 1.3.0)
   xml-simple (~> 1.1.4)
+
+BUNDLED WITH
+   1.10.6
