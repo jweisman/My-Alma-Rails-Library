@@ -23,8 +23,6 @@ Rails.application.routes.draw do
   end
 
   resources :deposits do
-    # TEMPORARY
-    get :view
     resources :files, only: :destroy, to: 'deposits#delete_file'
   end
 

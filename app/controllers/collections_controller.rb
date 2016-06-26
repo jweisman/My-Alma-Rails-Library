@@ -17,7 +17,8 @@ class CollectionsController < ApplicationController
 				}
 				format.json {
 					render json: get_files(params[:id])['representation_file'].map{|f| 
-						{src: f['url'], subHtml: "<h4>#{f['label']}</h4>"}
+						{src: f['url'], thumb: f['thumbnail_url'], 
+							subHtml: "<h4>#{f['label']}</h4>"}
 					}
 				}
 			end

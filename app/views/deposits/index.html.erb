@@ -1,9 +1,8 @@
-<% # Not in use at the moment %>
 
 <% content_for :title do %>Digital Deposits<% end %>
 
 <% if flash[:notice] %>
-<div class="alert alert-success"><%=flash[:notice]%></div>
+<div class="alert alert-success"><%=flash[:notice].html_safe%></div>
 <% end %>
 
 <div class="row-fluid">

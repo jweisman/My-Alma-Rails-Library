@@ -8,7 +8,8 @@ class DepositsController < ApplicationController
   before_action :deposit_profiles, on: [:new, :create, :edit]
 
   def index
-    @deposits = alma_get_deposits
+    #@deposits = alma_get_deposits
+    @deposits = {}
   end
 
   def new
@@ -24,9 +25,11 @@ class DepositsController < ApplicationController
     dc = deposit.entry.dublin_core_extensions.select { |a| 
       dc_fields.any? { |i| i.name == a.name }
     }
+
     @deposit = {
       :dc => dc, 
-      :files => deposit.entry.sword_derived_resource_links
+      :files => deposit.entry.sword_derived_resource_links,
+      :view_url => deposit.entry.alternate_uri || '#'
     }
   end
 
@@ -61,12 +64,10 @@ class DepositsController < ApplicationController
       File.delete temp_file
     end
     redirect_to deposits_path, 
-      notice: "Your deposit was successfully completed (#{receipt.entry.sword_verbose_description})"
-  end
-
-  def view
-    ### TEMP
-    @files = s3_list_objects 'almad-test', "TR_INTEGRATION_INST/upload/sword/#{params[:deposit_id]}"
+      notice: %Q[Your 
+        #{view_context.link_to("deposit", edit_deposit_path(receipt.entry.sword_verbose_description))} 
+        was successfully completed. 
+       ]
   end
 
   def delete_file
