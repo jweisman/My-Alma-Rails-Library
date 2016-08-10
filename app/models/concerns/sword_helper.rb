@@ -6,11 +6,13 @@ module SwordHelper
 		service.collections
 	end	
 
-	def sword_zip_deposit(collection, dc, zip_file)
+	def sword_zip_deposit(collection, dc, draft, zip_file)
 		#Create entry
 		entry = Atom::Entry.new
 		dc.each do |param|
-			entry.add_dublin_core_extension! param[0], param[1]
+			param[1].each do |val|
+				entry.add_dublin_core_extension! param[0], val
+			end
 		end
 
 		collection = Atom::Collection.new( collection )
@@ -21,6 +23,7 @@ module SwordHelper
 			:entry=>entry,
 			:filepath=>zip_file.to_s, 
 			:content_type=>"application/zip", 
+			:in_progress=>draft,
 			:packaging=>"http://purl.org/net/sword/package/SimpleZip"
 			)
 	end
@@ -32,16 +35,24 @@ module SwordHelper
    		sword_connection)
 	end
 
-	def sword_update_md(id, dc)
+	def sword_update_md(id, dc, in_progress = true)
 		deposit = sword_get_deposit(id)
 		entry = deposit.entry
 
 		dc.each do |param|
 			entry.delete_dublin_core_extension! param[0]
-			entry.add_dublin_core_extension! param[0], param[1]
+			param[1].each do |val|
+				entry.add_dublin_core_extension! param[0], val
+			end
 		end
    	
-   	entry.put!
+   	entry.put!( { in_progress: in_progress } )
+	end
+
+	def sword_delete_deposit(id)
+		deposit = sword_get_deposit(id)
+		entry = deposit.entry
+		entry.delete!
 	end
 
 	def sword_add_zip(id, zip_file)

@@ -1,6 +1,0 @@
-<h1>Delivery</h1>
-<ul>
-<% @files.each do |o| %>
-  <li><%= link_to o.key, o.presigned_url(:get, expires_in: 3600)%></li>
-<% end %>
-</ul>

@@ -8,8 +8,7 @@ class DepositsController < ApplicationController
   before_action :deposit_profiles, on: [:new, :create, :edit]
 
   def index
-    #@deposits = alma_get_deposits
-    @deposits = {}
+    alma_get_deposits
   end
 
   def new
@@ -27,14 +26,23 @@ class DepositsController < ApplicationController
     }
 
     @deposit = {
+      :id => deposit.entry.id,
       :dc => dc, 
       :files => deposit.entry.sword_derived_resource_links,
-      :view_url => deposit.entry.alternate_uri || '#'
+      :view_url => deposit.entry.alternate_uri || '#',
+      :updated => deposit.entry.updated,
+      :title => deposit.entry.title,
+      :status => deposit.entry.sword_treatment,
+      :note => deposit.entry.summary
     }
   end
 
   def update
-    if params[:files]
+    verb = 'updated'
+    if params[:button] == 'submit'
+      sword_update_md params[:id], [], false
+      verb = 'submitted'
+    elsif params[:files]
       begin 
         temp_file = Rails.root.join('tmp',"deposit-#{session.id}.zip")
         zip_files temp_file, params[:files]
@@ -42,13 +50,14 @@ class DepositsController < ApplicationController
       ensure
         File.delete temp_file
       end
-      redirect_to deposits_path, 
-        notice: "Your deposit was successfully updated."
     else
       sword_update_md params[:id], params[:dc]
-      redirect_to deposits_path, 
-        notice: "Your deposit was successfully updated."
     end
+    redirect_to deposits_path, 
+      notice: %Q[Your 
+          #{view_context.link_to("deposit", edit_deposit_path(params[:id]))} 
+          was successfully #{verb}. 
+         ]
   end
 
   def create
@@ -56,8 +65,9 @@ class DepositsController < ApplicationController
       temp_file = Rails.root.join('tmp',"deposit-#{session.id}.zip")
       zip_files temp_file, params[:files]
       receipt = sword_zip_deposit(
-        @deposit_profiles[params[:collection]][:url], 
+        @deposit_profiles[params[:collection]]["url"], 
         params[:dc], 
+        (params[:button]=='draft'),
         temp_file
         )
     ensure
@@ -65,7 +75,7 @@ class DepositsController < ApplicationController
     end
     redirect_to deposits_path, 
       notice: %Q[Your 
-        #{view_context.link_to("deposit", edit_deposit_path(receipt.entry.sword_verbose_description))} 
+        #{view_context.link_to("deposit", edit_deposit_path(receipt.entry.id))} 
         was successfully completed. 
        ]
   end
@@ -83,10 +93,8 @@ class DepositsController < ApplicationController
   end
 
   def destroy
-    ## TODO
-    @deposit.delete_filestreams
-    session[:deposit] = nil
-	 	redirect_to deposit_path, notice: "Your deposit was successfully deleted."
+    sword_delete_deposit params[:id]
+	 	redirect_to deposits_path, notice: "Your deposit was successfully withdrawn."
   end
 
   private
@@ -96,37 +104,20 @@ class DepositsController < ApplicationController
   end
 
   def deposit_profiles
-    #Rails.cache.delete("deposit_profiles")
-    @deposit_profiles =
-    Rails.cache.fetch("deposit_profiles", expires_in: 6.hours) do
+    if !session[:deposit_profiles]
       collections = sword_sd
-      Hash[collections.map{ 
-        |col| [col.href.split('/')[-1], { :title=> col.title.to_s, :url=> col.href }]
-        }] 
-    end    
+      session[:deposit_profiles] = Hash[collections.map{ 
+        |col| [col.href.split('/')[-1], { 
+          "title" => col.title.to_s, 
+          "url" => col.href,
+          "collectionPolicy" => col.sword_collection_policy 
+          }]
+        }]
+    end   
+    @deposit_profiles = session[:deposit_profiles]
   end
 
-  ##### TEMP
   def alma_get_deposits
-    response = 
-    RestClient.get "https://#{ENV['alma']}.alma.exlibrisgroup.com/view/sru/#{ENV['institution']}?version=1.2&operation=searchRetrieve&recordSchema=marcxml&query=alma.other_system_number=SWORD"
-
-    xml = Nokogiri::XML(response)
-    deposits = []
-    deposit_nodes = xml.xpath('/xmlns:searchRetrieveResponse/xmlns:records/xmlns:record/xmlns:recordData/record')
-    deposit_nodes.each do |deposit_node|
-      mms_id = deposit_node.at_xpath('controlfield[@tag="001"]').text
-      title = deposit_node.at_xpath('datafield[@tag="245"]/subfield[@code="a"]').text
-      author = deposit_node.at_xpath('datafield[@tag="100"]/subfield[@code="a"]').text
-      view = deposit_node.at_xpath('datafield[@tag="035"]/subfield[@code="a"]').text
-      view = "/deposits/#{view[view.index('(SWORD)') + 7..-1]}/view"
-      created_date = deposit_node.at_xpath('datafield[@tag="260"]/subfield[@code="c"]').text
-
-      deposits << 
-        { :id => mms_id, :title => title, :author => author, :view => view,
-        :created_date => created_date  }
-    end
-
-    return deposits
+    @deposits = alma_api_get "/users/#{current_user.id}/deposits"
   end
 end

@@ -22,4 +22,16 @@ module DepositsHelper
   	str
   end
 
+  def completed?(status)
+  	["WITHDRAWN", "DECLINED", "APPROVED"].include? status
+  end
+
+  def viewable?(status)
+  	!["WITHDRAWN", "DECLINED"].include? status
+  end
+
+  def editable?(status)
+  	["RETURNED", "DRAFT"].include? status
+  end
+
 end
