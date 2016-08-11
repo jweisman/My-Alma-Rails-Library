@@ -31,7 +31,3 @@ On any machine with [Ruby on Rails](http://rubyonrails.org/) and [Git](http://gi
   * `apikey` from the [Ex Libris Developer Network](https://developers.exlibrisgroup.com/) dashboard
   * `googleclientid` and `googleclientsecret` from the [Google Developer Console](https://console.developers.google.com/)
 4. Run the application: `bin\rails server` for WEBrick or `bundle exec puma` for Puma
-
-Attribution
------------
-The digital deposit section of this application makes use of the wonderful [JQuery File Upload](https://github.com/blueimp/jQuery-File-Upload), and is adapted from the very helpful [S3 CORS FileUpload](https://github.com/batter/s3_cors_fileupload) gem.

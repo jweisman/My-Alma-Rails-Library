@@ -34,6 +34,9 @@ gem "omniauth-oauth2", '1.3.1'
 # Use for authentication with SAML
 gem 'omniauth-saml'
 
+# Use for authentication with Alma via JWT
+gem 'omniauth-jwt', git: 'https://github.com/k1w1/omniauth-jwt.git'
+
 # Use puma web server (http://puma.io)
 gem "puma", platforms: ["ruby"]
 
@@ -50,4 +53,10 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin]
 gem 'rest-client'
 
 # Amazon SDK
-gem 'aws-sdk-core'
+gem 'aws-sdk'
+
+# Sword client library
+gem 'sword2ruby', :git => 'https://github.com/jweisman/sword2ruby.git'
+
+# To create ZIP files for deposits
+gem 'rubyzip'

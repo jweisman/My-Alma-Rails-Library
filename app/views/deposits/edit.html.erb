@@ -1,0 +1,99 @@
+<% content_for :title do %>Edit Deposit<% end %>
+
+<% if flash[:notice] %>
+<div class="alert alert-success"><%=flash[:notice]%></div>
+<% end %>
+
+<div class="row-fluid">
+
+  <div class="span12">
+    <h2>Deposit Details</h2>
+    <%= form_tag(deposit_path(params[:id]), {method: :put, class: 'form-horizontal'} ) do  %>
+    <div class="form-group">
+      <%= label_tag '', 'Title', class: "col-sm-2 control-label" %>
+      <div class="col-sm-10"><%= text_field_tag '', @deposit[:title], readonly: true, class: "form-control" %>
+      </div>    
+    </div>    
+    <div class="form-group">
+      <%= label_tag '', 'Updated on', class: "col-sm-2 control-label" %>
+      <div class="col-sm-10"><%= text_field_tag '', @deposit[:updated].to_date.strftime("%d %b %Y"), readonly: true, class: "form-control" %></div>    
+    </div>
+    <div class="form-group">
+      <%= label_tag '', 'Status', class: "col-sm-2 control-label" %>
+      <div class="col-sm-10"><%= text_field_tag '', @deposit[:status], readonly: true, class: "form-control" %></div>    
+    </div>
+    <div class="form-group">
+      <%= label_tag '', 'Notes', class: "col-sm-2 control-label" %>
+      <div class="col-sm-10"><%= text_area_tag '', @deposit[:note], readonly: true, class: "form-control" %></div>    
+    </div>    
+    <div class="form-group">
+      <div class="col-sm-10">
+        <a href=<%= deposits_path%> class="btn btn-default">Cancel</a>
+        <%= link_to "Withdraw Deposit", deposit_path(@deposit[:id]), class: "btn btn-danger", 'data-disable-with' => "<i class='fa fa-spinner fa-spin'></i>".html_safe, method: :delete %>
+        <%= button_tag "Submit Deposit", class: "btn btn-success", 'data-disable-with' => "<i class='fa fa-spinner fa-spin'></i>".html_safe, value: 'submit' %>
+      </div>
+    </div>
+    <% end %>
+  </div>
+  <hr/>
+	<%= form_tag(deposit_path(params[:id]), {method: :put, class: 'form-horizontal'} ) do  %>
+    <div class="span12">
+    	<h2>Metadata</h2>
+      <%= render "metadata_form" %>
+	    <div class="form-group">
+	      <div class="col-sm-10">
+          <%= button_tag "Update Metadata", class: "btn btn-primary", 'data-disable-with' => "<i class='fa fa-spinner fa-spin'></i> Updating...".html_safe %>    
+	      </div>
+	    </div>
+    </div>
+  <% end %>
+  <hr/>
+    <div class="span12">
+    	<h2>Files</h2>
+        <table class="table table-striped">
+          <tr><th>#</th><th>File name</th><th>File type</th><th></th></tr>
+          <% @deposit[:files].each_with_index do |file,i|  %>
+						<tr id="file_<%=base64_encode(file.href)%>">
+							<td><%=i+1%></td>
+							<td><%=decode(file.href.split('/')[-1])%></td>
+							<td><%=file.type%></td>
+							<td>
+	              <%= button_tag '', data: {
+	                  type: 'DELETE',
+	                  url: deposit_file_path(params[:id], base64_encode(file.href)),
+	                  object_id: base64_encode(file.href)
+	              }, class: 'btn btn-default delete' do%>
+	              <i class="glyphicon glyphicon-trash"></i>
+	              <% end %>								
+							</td>
+						</tr>
+					<% end %>
+        </table>
+
+			<%= form_tag(deposit_path(params[:id]), {method: :put, multipart: true, class: 'form-horizontal'} ) do  %>
+
+      <%= render "files_form" %>
+	    <div class="form-group">
+	      <div class="col-sm-10">
+          <%= link_to "View files", @deposit[:view_url], class: "btn btn-default", target: "_new" %> 
+          <%= button_tag "Add files", class: "btn btn-primary", 'data-disable-with' => "<i class='fa fa-spinner fa-spin'></i> Uploading...".html_safe %>    
+	      </div>
+	    </div>
+    	<% end %>
+    </div>
+ </div>
+
+
+<script>
+// Delete deposit and hide row
+$(".delete").click(function() {
+    row = $('#file_' + $(this).data('object-id'));
+    $.ajax({
+        url: $(this).data('url'),
+        type: $(this).data('type'),
+        success: function(result) { 
+           row.hide();
+        }
+    });
+});
+</script>

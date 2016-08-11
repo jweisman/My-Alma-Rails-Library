@@ -9,11 +9,16 @@
             <table class="table">
                 <tr><th>First Name:</th><td> <%= text_field(:user, :first_name, :value => @user["first_name"]) %></td></tr>
                 <tr><th>Middle Name:</th><td> <%= text_field(:user, :middle_name, :value => @user["middle_name"]) %></td></tr>
-                <tr><th>Last Name:</th><td> <%= text_field(:user, :last_name, :value => @user["last_name"]) %></td></tr>                
+                <tr><th>Last Name:</th><td> <%= text_field(:user, :last_name, :value => @user["last_name"]) %></td></tr>  
+                <% if @user["contact_info"]["email"][0] %>
+                <tr><th>Email:</th><td> <%= @user["contact_info"]["email"][0]["email_address"] %></td></tr>             
+                <% end %>      
+                <% if @user["contact_info"]["address"][0] %>             
                 <tr><th>Street Address:</th><td> <%= @user["contact_info"]["address"][0]["line1"] %></td></tr>
                 <tr><th>City:</th><td> <%= @user["contact_info"]["address"][0]["city"] %></td></tr>
                 <tr><th>State:</th><td> <%= @user["contact_info"]["address"][0]["state_province"] %></td></tr>
                 <tr><th>Postal Code</th><td> <%= @user["contact_info"]["address"][0]["postal_code"] %></td></tr>
+                <% end %>
           </table>
 	      <input class="btn btn-default" type="submit" value="Update"/>
         <% end %>

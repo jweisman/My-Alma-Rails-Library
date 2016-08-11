@@ -1,3 +1,5 @@
+require 'base64'
+
 module DepositsHelper
 	def formatFileSize(bytes) 
 	    return '' if !bytes.is_a? Numeric
@@ -9,4 +11,27 @@ module DepositsHelper
 	def collection_name(import_profile)
 		import_profile["digital_details"]["collection_assignment"]["desc"]
 	end
+
+	def decode(url)
+		URI.unescape(url)
+	end
+
+  def base64_encode(bin, padding: false)
+  	str = Base64.strict_encode64(bin).tr("+/", "-_")
+  	str = str.delete("=") unless padding
+  	str
+  end
+
+  def completed?(status)
+  	["WITHDRAWN", "DECLINED", "APPROVED"].include? status
+  end
+
+  def viewable?(status)
+  	!["WITHDRAWN", "DECLINED"].include? status
+  end
+
+  def editable?(status)
+  	["RETURNED", "DRAFT"].include? status
+  end
+
 end

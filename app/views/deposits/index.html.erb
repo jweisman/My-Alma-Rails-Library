@@ -1,50 +1,48 @@
-<% # Not in use at the moment %>
 
-<% content_for :title do %>Digital Repository<% end %>
+<% content_for :title do %>Digital Deposits<% end %>
 
 <% if flash[:notice] %>
-<div class="alert alert-success"><%=flash[:notice]%></div>
+<div class="alert alert-success"><%=flash[:notice].html_safe%></div>
 <% end %>
+
+<% n = 0 %>
 
 <div class="row-fluid">
     <div class="span12">
         <p>Here are your deposits in our repository:</p>
+        <ul class="nav nav-tabs">
+          <li role="presentation" <%= 'class=active' unless params[:completed]%>><%= link_to "In Progress", deposits_path%></li>
+          <li role="presentation" <%= 'class=active' if params[:completed]%>><%= link_to "Completed", deposits_path(completed: true)%></li>
+        </ul>
+        &nbsp;
         <table class="table table-striped">
-            <tr><th>#</th><th>Title</th><th>Created Date</th><th>Status</th><th>Collection</th>
-                <th># of Files</th><th>Size of Files</th><th></th></tr>
-            <% @deposits.each_with_index do |deposit,i| %>
-                <tr id="deposit_<%=deposit.id%>">
-                    <td><%=i+1%></td>
-                    <td><%= deposit.metadata["title"] || "N/A"%></td>
-                    <td><%= deposit.created_at.localtime.strftime("%d-%b-%Y %H:%M")%></td>
-                    <td><%= deposit.status%></td>
+            <tr><th>#</th><th>Title</th><th>Created Date</th><th>ID</th><th>Status</th><th></th></tr>
+            <% if @deposits["total_record_count"] > 0 
+                @deposits["user_deposit"].each_with_index do |deposit,i| %>
+                <% if (params[:completed] && completed?(deposit["status"])) || (!params[:completed] && !completed?(deposit["status"])) %>
+                <tr id="deposit_<%=deposit["deposit_id"]%>">
+                    <td><%=n+=1%></td>
+                    <td><%= deposit["title"] || "N/A"%></td>
+                    <td><%= deposit["submission_date"].to_date.strftime("%d %b %Y")%></td>
+                    <td><%= deposit["deposit_id"]%></td>
+                    <td><%= deposit["status"]%></td>
                     <td>
-                        <span data-toggle="tooltip" title="<%=deposit.folder_name%>">
-                            <%= collection_name(@import_profiles.find {|i| i["id"] == deposit.import_profile.to_s}) %></td>
-                        </span>
-                    </td>
-                    <td><%= deposit.filestreams.count%></td>
-                    <td><%= formatFileSize(deposit.filestreams.sum(:file_size))%></td>
-                    <td>
-                        <%= button_tag '', data: {
-                            type: 'DELETE',
-                            url: deposit_path(deposit),
-                            object_id: deposit.id
-                        }, class: 'btn btn-default delete' do%>
-                        <i class="glyphicon glyphicon-trash"></i>
+                        <% if viewable? deposit["status"] %>
+                        <a class="btn btn-default" href="<%=deposit["delivery_url"]%>" target="_new" data-toggle="tooltip" title="View deposit">
+                        <i class="glyphicon glyphicon-eye-open"></i></a>&nbsp;
                         <% end %>
-                        <!--
-                        <button class="btn btn-default delete" data-type="DELETE" data-url="<%=deposit_path(deposit)%>" data-object_id="<%=deposit.id%>" data-confirmation="Are you sure?" onclick="delete_file(<%=deposit.id%>)">
-                        <i class="glyphicon glyphicon-trash"></i>
-                        </button>
-                        -->
-                        <% if deposit.status != "SUBMITTED" %>
-                        <a class="btn btn-default" href="<%=edit_deposit_path deposit%>">
+                        <% if editable? deposit["status"] %>
+                        <a class="btn btn-default" href="<%=edit_deposit_path deposit["deposit_id"]%>" data-toggle="tooltip" title="Edit deposit">
                         <i class="glyphicon glyphicon-pencil"></i>
+                        </a>
                         <% end %>
                         </a>
                     </td>
                 </tr>
+                <% end %>
+            <% end
+            else %>
+                <tr><td colspan="5">No deposits found.</td></tr>
             <% end %>
         </table>
     <%= link_to 'Add a new deposit', new_deposit_path, class: 'btn btn-primary'%>

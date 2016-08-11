@@ -42,7 +42,7 @@ class FinesController < ApplicationController
   			"external_transaction_id"	=> params["paymentId"]
   		}
   		qs = p.collect {|key,value| "#{key}=#{value}"}.join "&"
-  		alma_api_post("/users/#{current_user.uid}/fees/all?#{qs}", nil)
+  		alma_api_post("/users/#{current_user.id}/fees/all?#{qs}", nil)
 
   		redirect_to fines_path, 
   			notice: "Your payment has been successfully processed and #{amount} 
@@ -79,6 +79,6 @@ class FinesController < ApplicationController
   end
   
   def get_fines
-    @fines = alma_api_get("/users/#{current_user.uid}/fees")
+    @fines = alma_api_get("/users/#{current_user.id}/fees")
 	end
 end
