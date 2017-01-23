@@ -78,8 +78,8 @@ module SwordHelper
 
 	def sword_connection
 		@sword_user ||= Sword2Ruby::User.new(
-			'apikey', 
-			ENV["apikey"], 
+			ENV['sword_user'],
+			ENV['sword_pass'],
 			@obo
 			)
 		@sword_connection ||=

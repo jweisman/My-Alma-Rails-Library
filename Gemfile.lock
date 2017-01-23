@@ -1,8 +1,8 @@
 GIT
   remote: https://github.com/jweisman/sword2ruby.git
-  revision: fa7ee4a96e4b9e36d89f04bd3b77c5fa885e9c3c
+  revision: 2bda48a78e67c87b9d65f0f3d98d3267fe962e5c
   specs:
-    sword2ruby (1.0.1)
+    sword2ruby (1.0.2)
       atom-tools (~> 2.0.5)
       hpricot (~> 0.8.3)
 
@@ -218,11 +218,11 @@ DEPENDENCIES
   sass-rails (~> 4.0.3)
   sdoc (~> 0.4.0)
   spring
-  sword2ruby!
+  sword2ruby (>= 1.0.2)!
   turbolinks
   tzinfo-data
   uglifier (>= 1.3.0)
   xml-simple (~> 1.1.4)
 
 BUNDLED WITH
-   1.10.6
+   1.13.5

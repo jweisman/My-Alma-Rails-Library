@@ -16,6 +16,9 @@ defaults: &defaults
   amazonsecretkey: {AWS secret key for scratch bucket}
   oaiset: {OAI set}
   alma: {Alma instance name}
+  sword_service: {SWORD service URL}
+  sword_user: {SWORD user name}
+  sword_pass: {SWORD password}  
   root_url: {root URL of the application}
   alma_auth_secret: {auth secret for Alma authentication}
 
