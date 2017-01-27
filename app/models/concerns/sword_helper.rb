@@ -2,7 +2,7 @@ require 'sword2ruby'
 
 module SwordHelper
 	def sword_sd
-		service = Atom::Service.new("#{ENV["sword_service"]}/sd", sword_connection)
+		service = Atom::Service.new("#{sword_service}/sd", sword_connection)
 		service.collections
 	end	
 
@@ -31,7 +31,7 @@ module SwordHelper
 	def sword_get_deposit(id)
 		Sword2Ruby::DepositReceipt.new(
    		sword_connection.get(
-   			"#{ENV["sword_service"]}/edit/#{id}"), 
+   			"#{sword_service}/edit/#{id}"), 
    		sword_connection)
 	end
 
@@ -72,6 +72,10 @@ module SwordHelper
 
   def dc_fields
     [REXML::Element.new('creator'), REXML::Element.new('title')]
+  end
+
+  def sword_service
+  	"https://#{ENV["alma"]}.alma.exlibrisgroup.com/sword/#{ENV["institution"]}"
   end
 
 	private
