@@ -118,6 +118,6 @@ class DepositsController < ApplicationController
   end
 
   def alma_get_deposits
-    @deposits = alma_api_get "/users/#{current_user.id}/deposits"
+    @deposits = alma_api_get "/users/#{current_user.id}/deposits?limit=50"
   end
 end
