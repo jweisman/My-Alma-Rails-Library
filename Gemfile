@@ -56,7 +56,7 @@ gem 'rest-client'
 gem 'aws-sdk'
 
 # Sword client library
-gem 'sword2ruby', '>=1.0.2', :git => 'https://github.com/jweisman/sword2ruby.git'
+gem 'sword2ruby', '>=1.0.2', :git => 'https://github.com/swordapp/sword2ruby.git'
 
 # To create ZIP files for deposits
 gem 'rubyzip'

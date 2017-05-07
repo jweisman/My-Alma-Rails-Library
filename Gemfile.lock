@@ -1,18 +1,18 @@
 GIT
-  remote: https://github.com/jweisman/sword2ruby.git
-  revision: 2bda48a78e67c87b9d65f0f3d98d3267fe962e5c
-  specs:
-    sword2ruby (1.0.2)
-      atom-tools (~> 2.0.5)
-      hpricot (~> 0.8.3)
-
-GIT
   remote: https://github.com/k1w1/omniauth-jwt.git
   revision: afb96feb964c826a3af3748f730b3879dea0a5c0
   specs:
     omniauth-jwt (0.0.3)
       jwt
       omniauth (~> 1.1)
+
+GIT
+  remote: https://github.com/swordapp/sword2ruby.git
+  revision: 88e79332b6a12d1cdd27031041711b1e64005bf2
+  specs:
+    sword2ruby (1.0.2)
+      atom-tools (~> 2.0.5)
+      hpricot (~> 0.8.3)
 
 GEM
   remote: https://rubygems.org/
