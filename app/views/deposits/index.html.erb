@@ -6,7 +6,6 @@
 <% end %>
 
 <% n = 0 %>
-<% @deposits["user_deposit"].sort_by!{|d|d['modification_date']}.reverse! %>
 
 <div class="row-fluid">
     <div class="span12">
@@ -19,6 +18,7 @@
         <table class="table table-striped">
             <tr><th>#</th><th>Title</th><th>Created Date</th><th>ID</th><th>Status</th><th></th></tr>
             <% if @deposits["total_record_count"] > 0 
+                @deposits["user_deposit"].sort_by!{|d|d['modification_date']}.reverse!
                 @deposits["user_deposit"].each_with_index do |deposit,i| %>
                 <% if (params[:completed] && completed?(deposit["status"])) || (!params[:completed] && !completed?(deposit["status"])) %>
                 <tr id="deposit_<%=deposit["deposit_id"]%>">
