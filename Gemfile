@@ -1,8 +1,8 @@
 source 'https://rubygems.org'
-ruby "~> 2.3.0"
+ruby "~> 2.4.0"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.1.6'
+gem 'rails', '4.2.9'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.3'
 # Use Uglifier as compressor for JavaScript assets
@@ -27,9 +27,9 @@ gem 'spring',        group: :development
 gem 'rails_12factor', group: :production
 
 # Use Google OAuth gem for Google authentication
-gem "omniauth-google-oauth2", "~> 0.2.1"
+gem "omniauth-google-oauth2"
 # Specify version until https://github.com/intridea/omniauth-oauth2/issues/81 is fixed
-gem "omniauth-oauth2", '1.3.1'
+gem "omniauth-oauth2"
 
 # Use for authentication with SAML
 gem 'omniauth-saml'
