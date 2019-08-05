@@ -75,7 +75,7 @@ class FinesController < ApplicationController
 
   def choose_layout
     "popup" if current_user and 
-      current_user.provider.start_with?('PDS')
+      current_user.provider.start_with? *%w(PDS jwt)
   end
   
   def get_fines

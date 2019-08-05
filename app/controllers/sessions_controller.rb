@@ -8,7 +8,7 @@ class SessionsController < ApplicationController
     if valid_alma_user?(user.id)
       session[:user] = user.to_json
       session[:user_id] = user.id
-      redirect_to root_path
+      redirect_to CGI.unescape(params[:redirect] || root_path)
     else
       flash.now[:alert] = "Your user doesn't exist in Alma. (#{user.id})"
       render :error    

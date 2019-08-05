@@ -1,8 +1,9 @@
 GIT
-  remote: https://github.com/k1w1/omniauth-jwt.git
-  revision: afb96feb964c826a3af3748f730b3879dea0a5c0
+  remote: https://github.com/jweisman/omniauth-jwt.git
+  revision: 16fef8271c1e11bb8f814596f96ba741f03afbef
+  branch: support_es256
   specs:
-    omniauth-jwt (0.0.3)
+    omniauth-jwt (0.0.4)
       jwt
       omniauth (~> 1.1)
 

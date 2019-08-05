@@ -11,12 +11,22 @@ class User
 
   # Handle either OAuth or SAML
   def self.from_omniauth(auth)
-    self.new({
-    provider: auth.provider,
-    id: auth.uid,
-    name: auth.info.name || (auth.extra.raw_info["User.FirstName"] || "") + " " + auth.extra.raw_info["User.LastName"],
-    email: auth.info.email || auth.extra.raw_info["User.email"]
-    })
+    case auth.provider
+    when "jwt" # Primo JWT
+      self.new({
+        provider: auth.provider,
+        id: auth.uid,
+        name: auth.extra.raw_info["displayName"],
+        email: ""
+      })
+    else # SAML
+      self.new({
+        provider: auth.provider,
+        id: auth.uid,
+        name: auth.info.name || (auth.extra.raw_info["User.FirstName"] || "") + " " + auth.extra.raw_info["User.LastName"],
+        email: auth.info.email || auth.extra.raw_info["User.email"]
+      })
+    end
   end
   
   # Add support for user from PDS
