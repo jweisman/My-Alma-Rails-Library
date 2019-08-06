@@ -22,6 +22,7 @@ Rails.application.config.middleware.use OmniAuth::Builder do
         env['omniauth.strategy'].options[:uid_claim]  =  "userName"
         env['omniauth.strategy'].options[:required_claims]  = ['userName']
         env['omniauth.strategy'].options[:algorithm] = 'ES256'        
+        env['omniauth.strategy'].options[:verify]     = false # Temporary until Primo supports getting the public key
       else
         env['omniauth.strategy'].options[:secret]     =  ENV['alma_auth_secret']
         env['omniauth.strategy'].options[:uid_claim]  =  "id"
