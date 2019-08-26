@@ -18,7 +18,7 @@ Rails.application.config.middleware.use OmniAuth::Builder do
       req = Rack::Request.new(env)
       if req.params['from']=='primo'
         # Get public key with API
-        env['omniauth.strategy'].options[:secret]     = "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAE0jKK/Zt3NxAxmEgxCox+UJprj+xGm/+00pdTmwiPjw8PxhCf9m6b3tV+mM3xCiMiuDOn7GJ6hSIf296Ap9998w==\n-----END PUBLIC KEY-----"
+        env['omniauth.strategy'].options[:secret]     = primo_public_key
         env['omniauth.strategy'].options[:uid_claim]  =  "userName"
         env['omniauth.strategy'].options[:required_claims]  = ['userName']
         env['omniauth.strategy'].options[:algorithm] = 'ES256'        
@@ -31,3 +31,8 @@ Rails.application.config.middleware.use OmniAuth::Builder do
       env['omniauth.strategy'].options[:auth_url]   =  "https://#{ENV['alma']}.alma.exlibrisgroup.com/view/socialLogin?institutionCode=#{ENV['institution']}&backUrl=#{ENV['root_url']}/auth/jwt/callback"
     }
 end
+
+def primo_public_key
+  "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAE0jKK/Zt3NxAxmEgxCox+UJprj+xGm/+00pdTmwiPjw8PxhCf9m6b3tV+mM3xCiMiuDOn7GJ6hSIf296Ap9998w==\n-----END PUBLIC KEY-----"
+end
+
